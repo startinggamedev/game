@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1ngw40t8dmj0"]
+
+[ext_resource type="Script" path="res://world actors/physics/bodies/components/velocity/linear velocity/directional_velocity.gd" id="1_6py64"]
+
+[node name="Velocity" type="Node"]
+script = ExtResource("1_6py64")

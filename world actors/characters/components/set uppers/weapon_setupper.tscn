@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://u46x63gfopwt"]
+
+[ext_resource type="Script" path="res://world actors/characters/components/set uppers/weapon_setupper.gd" id="1_hccmg"]
+
+[node name="weapon_setupper" type="Node2D"]
+script = ExtResource("1_hccmg")

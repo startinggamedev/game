@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4jeqb3kkyl2n"]
+
+[ext_resource type="PackedScene" uid="uid://owxrflpec5hl" path="res://world actors/physics/bodies/physics_body.tscn" id="1_jhsmu"]
+[ext_resource type="Script" path="res://world actors/physics/bodies/test_physics_body.gd" id="2_1p2ew"]
+
+[node name="physics_manager" instance=ExtResource("1_jhsmu")]
+script = ExtResource("2_1p2ew")
+can_move = false

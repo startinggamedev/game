@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=3 uid="uid://bgsw2lf0jcapk"]
+
+[ext_resource type="PackedScene" uid="uid://cqvoo4upvem11" path="res://world actors/rooms/room_template.tscn" id="1_a11et"]
+[ext_resource type="Texture2D" uid="uid://dm6o2ku8mw0ly" path="res://visuals/sprites/plain_background.png" id="2_u14x3"]
+[ext_resource type="PackedScene" uid="uid://ct2pmyl2gjme" path="res://world actors/physics/objects/pendulum.tscn" id="3_3764m"]
+
+[node name="room" instance=ExtResource("1_a11et")]
+
+[node name="world" parent="layer_holder" index="0"]
+follow_viewport_enabled = true
+
+[node name="background" parent="layer_holder/world" index="0"]
+follow_viewport_enabled = true
+
+[node name="TextureRect" type="TextureRect" parent="layer_holder/world/background" index="0"]
+offset_left = -3.0
+offset_right = 973.0
+offset_bottom = 544.0
+texture = ExtResource("2_u14x3")
+stretch_mode = 1
+
+[node name="Node2D" type="Node2D" parent="layer_holder/world/characters" index="0"]
+position = Vector2(242, 178)
+
+[node name="Pendulum" parent="layer_holder/world/characters/Node2D" index="0" instance=ExtResource("3_3764m")]
+follow_mosue = true
+
+[node name="Pendulum2" parent="layer_holder/world/characters/Node2D/Pendulum" index="1" instance=ExtResource("3_3764m")]
+position = Vector2(50, 0)
+
+[node name="Pendulum2" parent="layer_holder/world/characters/Node2D/Pendulum/Pendulum2" index="1" instance=ExtResource("3_3764m")]
+position = Vector2(50, 0)
+
+[node name="Pendulum2" parent="layer_holder/world/characters/Node2D/Pendulum/Pendulum2/Pendulum2" index="1" instance=ExtResource("3_3764m")]
+position = Vector2(50, 0)
+
+[node name="Pendulum2" parent="layer_holder/world/characters/Node2D/Pendulum/Pendulum2/Pendulum2/Pendulum2" index="1" instance=ExtResource("3_3764m")]
+position = Vector2(48, -21)
+
+[node name="Pendulum2" parent="layer_holder/world/characters/Node2D/Pendulum/Pendulum2/Pendulum2/Pendulum2/Pendulum2" index="1" instance=ExtResource("3_3764m")]
+position = Vector2(50, 0)
+
+[node name="Pendulum2" parent="layer_holder/world/characters/Node2D/Pendulum/Pendulum2/Pendulum2/Pendulum2/Pendulum2/Pendulum2" index="1" instance=ExtResource("3_3764m")]
+position = Vector2(48, -21)
+
+[node name="Pendulum3" parent="layer_holder/world/characters/Node2D/Pendulum/Pendulum2/Pendulum2/Pendulum2/Pendulum2/Pendulum2" index="2" instance=ExtResource("3_3764m")]
+position = Vector2(48, 21)
+
+[node name="Pendulum3" parent="layer_holder/world/characters/Node2D/Pendulum/Pendulum2/Pendulum2/Pendulum2" index="2" instance=ExtResource("3_3764m")]
+position = Vector2(48, 21)
+
+[node name="Pendulum2" parent="layer_holder/world/characters/Node2D/Pendulum/Pendulum2/Pendulum2/Pendulum2/Pendulum3" index="1" instance=ExtResource("3_3764m")]
+position = Vector2(50, 0)
+
+[node name="Pendulum2" parent="layer_holder/world/characters/Node2D/Pendulum/Pendulum2/Pendulum2/Pendulum2/Pendulum3/Pendulum2" index="1" instance=ExtResource("3_3764m")]
+position = Vector2(48, -21)
+
+[node name="Pendulum3" parent="layer_holder/world/characters/Node2D/Pendulum/Pendulum2/Pendulum2/Pendulum2/Pendulum3/Pendulum2" index="2" instance=ExtResource("3_3764m")]
+position = Vector2(48, 21)
+
+[node name="foreground" parent="layer_holder/world" index="2"]
+follow_viewport_enabled = true

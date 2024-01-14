@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dl68foi2muccs"]
+
+[ext_resource type="Script" path="res://world actors/characters/components/mechanics/rockets/rocket.gd" id="1_lkqrb"]
+[ext_resource type="Script" path="res://world actors/physics/bodies/components/velocity/linear velocity/directional_velocity.gd" id="2_54ju8"]
+[ext_resource type="Script" path="res://world actors/items/weapons/components/aim_node/aim_node.gd" id="3_l0yvd"]
+[ext_resource type="PackedScene" uid="uid://bf7w30b5f7me5" path="res://visuals/particles/rocket_smoke.tscn" id="4_l8fbe"]
+
+[node name="Rocket" type="Node2D" node_paths=PackedStringArray("rocket_particles", "aim_node")]
+z_index = 1
+script = ExtResource("1_lkqrb")
+rocket_particles = NodePath("RocketSmoke")
+aim_node = NodePath("aim_node")
+
+[node name="rocket_velocity" type="Node" parent="."]
+script = ExtResource("2_54ju8")
+magnitude = 100.0
+
+[node name="aim_node" type="Node2D" parent="."]
+script = ExtResource("3_l0yvd")
+aim_smoothing = 0.9
+
+[node name="RocketSmoke" parent="." instance=ExtResource("4_l8fbe")]
+z_index = -1

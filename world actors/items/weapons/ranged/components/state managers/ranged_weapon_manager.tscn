@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5m78hvtvwnhm"]
+
+[ext_resource type="Script" path="res://world actors/items/weapons/ranged/components/state managers/ranged_weapon_manager.gd" id="1_o2fsb"]
+[ext_resource type="PackedScene" uid="uid://6jmye0mnnuex" path="res://world actors/items/weapons/ranged/components/bullets/test_bullet.tscn" id="2_254eb"]
+
+[node name="ranged_weapon_manager" type="Node"]
+script = ExtResource("1_o2fsb")
+projectile = ExtResource("2_254eb")
+attack_force = 100.0

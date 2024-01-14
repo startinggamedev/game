@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqvoo4upvem11"]
+
+[ext_resource type="Script" path="res://world actors/rooms/room_template.gd" id="1_p6dc4"]
+[ext_resource type="Shader" path="res://visuals/shaders/outline.gdshader" id="2_rqsn5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_13t1s"]
+shader = ExtResource("2_rqsn5")
+
+[node name="room" type="Node2D"]
+script = ExtResource("1_p6dc4")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_13t1s")
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="world_viewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(960, 540)
+render_target_update_mode = 4

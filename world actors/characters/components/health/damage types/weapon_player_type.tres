@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DamageType" load_steps=2 format=3 uid="uid://bxtu6445q67t0"]
+
+[ext_resource type="Script" path="res://world actors/characters/components/health/damage types/damage_type.gd" id="1_wdox6"]
+
+[resource]
+script = ExtResource("1_wdox6")
+type = 4
+can_damage = Array[int]([2, 0])

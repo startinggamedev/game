@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bttwyedplwo1g"]
+
+[ext_resource type="Script" path="res://commons/triggers/triggerable/triggerable.gd" id="1_vcrxl"]
+
+[node name="triggerable" type="Node2D"]
+script = ExtResource("1_vcrxl")

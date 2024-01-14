@@ -1,0 +1,60 @@
+[gd_scene load_steps=18 format=3 uid="uid://bc0qxxq5kxtt4"]
+
+[ext_resource type="PackedScene" uid="uid://c0w0qclp1camn" path="res://world actors/characters/character.tscn" id="1_55lax"]
+[ext_resource type="Script" path="res://world actors/items/weapons/ranged/components/bullets/bullet.gd" id="2_hbd1r"]
+[ext_resource type="Script" path="res://world actors/characters/components/health/damage/damage_respects.gd" id="3_5uggq"]
+[ext_resource type="Script" path="res://world actors/characters/components/health/damage_bump_types/velocity_bump_type.gd" id="3_qpboi"]
+[ext_resource type="Script" path="res://world actors/characters/components/health/damage/damage.gd" id="4_uhu8j"]
+[ext_resource type="Script" path="res://world actors/characters/components/health/extra_damage/collateral_damage.gd" id="5_72b46"]
+[ext_resource type="Script" path="res://world actors/characters/components/health/extra_damage/collision_damage.gd" id="6_7djot"]
+[ext_resource type="Resource" uid="uid://dpptet334fbtr" path="res://world actors/characters/components/health/damage/instakill_damage.tres" id="6_25jd5"]
+[ext_resource type="Script" path="res://world actors/items/weapons/components/aim_node/aim_node.gd" id="8_6q1yl"]
+[ext_resource type="Script" path="res://world actors/items/weapons/components/aim_types/velocity_aim.gd" id="9_0pmcm"]
+[ext_resource type="Script" path="res://world actors/items/weapons/ranged/components/bullets/dead.gd" id="9_dchff"]
+
+[sub_resource type="Resource" id="Resource_hvrth"]
+script = ExtResource("3_qpboi")
+normalized_velocity = false
+bump_magnitude = 200.0
+
+[sub_resource type="Resource" id="Resource_4v3uw"]
+script = ExtResource("3_5uggq")
+defense = true
+iframe = true
+invincibility = true
+
+[sub_resource type="Resource" id="Resource_64q1g"]
+script = ExtResource("4_uhu8j")
+respect = SubResource("Resource_4v3uw")
+damage = 1.0
+
+[sub_resource type="Resource" id="Resource_k264s"]
+script = ExtResource("5_72b46")
+damage = SubResource("Resource_64q1g")
+
+[sub_resource type="Resource" id="Resource_3dwgf"]
+script = ExtResource("6_7djot")
+damage = ExtResource("6_25jd5")
+
+[sub_resource type="Resource" id="Resource_dsuq4"]
+script = ExtResource("9_0pmcm")
+physics_body = NodePath("..")
+
+[node name="bullet" groups=["bullet"] instance=ExtResource("1_55lax")]
+z_index = 100
+script = ExtResource("2_hbd1r")
+weight = 0.1
+friction_multiplier = 0.0
+
+[node name="damage_detector" parent="." index="0"]
+damage_bump = Array[Resource("res://world actors/characters/components/health/damage_bump_types/damage_bump_type.gd")]([SubResource("Resource_hvrth")])
+
+[node name="health_manager" parent="." index="1"]
+extra_damage = Array[Resource("res://world actors/characters/components/health/extra_damage/extra_damage.gd")]([SubResource("Resource_k264s"), SubResource("Resource_3dwgf")])
+
+[node name="dead" parent="behaviour_manager" index="0"]
+script = ExtResource("9_dchff")
+
+[node name="AimNode" type="Node2D" parent="." index="4"]
+script = ExtResource("8_6q1yl")
+aim_type = SubResource("Resource_dsuq4")

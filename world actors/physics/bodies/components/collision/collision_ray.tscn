@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://cmfh2c6lgmatl"]
+
+[node name="collision_ray" type="RayCast2D"]
+enabled = false
+target_position = Vector2(0, 0)

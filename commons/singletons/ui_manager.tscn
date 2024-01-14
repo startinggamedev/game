@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://b4wvw5ktwhkeg"]
+
+[ext_resource type="Script" path="res://commons/singletons/mouse_manager.gd" id="1_pvo6d"]
+[ext_resource type="Script" path="res://commons/singletons/ui_manager.gd" id="1_q50p7"]
+[ext_resource type="Texture2D" uid="uid://fhuvgeyvrym8" path="res://visuals/sprites/cross hair edge.png" id="2_1dsdt"]
+[ext_resource type="Texture2D" uid="uid://tdmasry2xxly" path="res://visuals/sprites/cross hair center.png" id="3_07cog"]
+[ext_resource type="Texture2D" uid="uid://c0io7ax25q37s" path="res://visuals/sprites/outer crosshair edge.png" id="5_w6mvv"]
+
+[node name="ui" type="CanvasLayer"]
+script = ExtResource("1_q50p7")
+
+[node name="mouse" type="Node2D" parent="." node_paths=PackedStringArray("crosshair_sprites")]
+script = ExtResource("1_pvo6d")
+crosshair_sprites = [NodePath("crosshair"), NodePath("crosshair_edge"), NodePath("OuterCrosshairEdge")]
+crosshair_smoothing = Array[float]([0.0, 0.6, 0.9])
+crosshair_rotation = Array[float]([6.283, 3.142, 1.571])
+
+[node name="crosshair_edge" type="Sprite2D" parent="mouse"]
+texture = ExtResource("2_1dsdt")
+
+[node name="crosshair" type="Sprite2D" parent="mouse"]
+texture = ExtResource("3_07cog")
+
+[node name="OuterCrosshairEdge" type="Sprite2D" parent="mouse"]
+position = Vector2(0, -1)
+texture = ExtResource("5_w6mvv")
