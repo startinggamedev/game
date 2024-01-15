@@ -94,7 +94,7 @@ position = Vector2(6, 29)
 [node name="rope_end4" type="Node2D" parent="Pendulum2/balloon" index="3"]
 position = Vector2(10, 29)
 
-[node name="Pendulum" parent="." index="8" instance=ExtResource("12_c2ry5")]
+[node name="Pendulum" parent="." index="7" instance=ExtResource("12_c2ry5")]
 position = Vector2(0, 29)
 
 [node name="BalloonBasket" type="Sprite2D" parent="Pendulum" index="0"]

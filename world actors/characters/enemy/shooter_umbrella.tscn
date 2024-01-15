@@ -51,14 +51,14 @@ trigger_spacing_sec = 0.0
 bounciness = 0.9
 weight = 0.6
 
-[node name="damage_detector" parent="." index="0"]
+[node name="velocity_holder#physics_velocity" type="Node" parent="." index="0"]
+script = ExtResource("4_7fjjq")
+
+[node name="damage_detector" parent="." index="1"]
 damage = SubResource("Resource_y57ox")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="damage_detector" index="0"]
 polygon = PackedVector2Array(32, -32, 0, 20, -32, -32)
-
-[node name="velocity_manager#damage_bump" type="Node" parent="." index="1"]
-script = ExtResource("4_7fjjq")
 
 [node name="health_manager" parent="." index="2"]
 hp = 10.0
@@ -91,6 +91,3 @@ weapon = ExtResource("8_oy6u2")
 aim_type = SubResource("Resource_en7gj")
 triggerer = SubResource("Resource_pmi64")
 character = NodePath("../..")
-
-[node name="physics_velocity" type="Node" parent="velocity_holder" index="0"]
-script = ExtResource("4_7fjjq")

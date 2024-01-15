@@ -7,6 +7,4 @@ z_as_relative = false
 collision_layer = 12
 motion_mode = 1
 script = ExtResource("1_8ggxd")
-velocity_holder = NodePath("velocity_holder")
-
-[node name="velocity_holder" type="Node" parent="."]
+velocity_holder = NodePath("")
