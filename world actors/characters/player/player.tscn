@@ -82,25 +82,17 @@ damping = 0.05
 texture = ExtResource("4_8t2c0")
 offset = Vector2(0, -5)
 
-[node name="rope4" parent="Pendulum2" index="1" node_paths=PackedStringArray("chain_end") instance=ExtResource("9_cjup7")]
-position = Vector2(9, 29)
-texture = ExtResource("10_dwhqi")
-chain_end = NodePath("../../Pendulum/BalloonBasket/rope_end4")
+[node name="rope_end" type="Node2D" parent="Pendulum2/balloon" index="0"]
+position = Vector2(-10, 29)
 
-[node name="rope3" parent="Pendulum2" index="2" node_paths=PackedStringArray("chain_end") instance=ExtResource("9_cjup7")]
-position = Vector2(7, 29)
-texture = ExtResource("10_dwhqi")
-chain_end = NodePath("../../Pendulum/BalloonBasket/rope_end3")
+[node name="rope_end2" type="Node2D" parent="Pendulum2/balloon" index="1"]
+position = Vector2(-6, 29)
 
-[node name="rope2" parent="Pendulum2" index="3" node_paths=PackedStringArray("chain_end") instance=ExtResource("9_cjup7")]
-position = Vector2(-7, 29)
-texture = ExtResource("10_dwhqi")
-chain_end = NodePath("../../Pendulum/BalloonBasket/rope_end2")
+[node name="rope_end3" type="Node2D" parent="Pendulum2/balloon" index="2"]
+position = Vector2(6, 29)
 
-[node name="rope" parent="Pendulum2" index="4" node_paths=PackedStringArray("chain_end") instance=ExtResource("9_cjup7")]
-position = Vector2(-9, 29)
-texture = ExtResource("10_dwhqi")
-chain_end = NodePath("../../Pendulum/BalloonBasket/rope_end")
+[node name="rope_end4" type="Node2D" parent="Pendulum2/balloon" index="3"]
+position = Vector2(10, 29)
 
 [node name="Pendulum" parent="." index="8" instance=ExtResource("12_c2ry5")]
 position = Vector2(0, 29)
@@ -117,14 +109,22 @@ aim_type = SubResource("Resource_toopx")
 triggerer = SubResource("Resource_v0k2y")
 character = NodePath("../../..")
 
-[node name="rope_end" type="Node2D" parent="Pendulum/BalloonBasket" index="1"]
-position = Vector2(2.67029e-05, -7)
+[node name="rope4" parent="Pendulum/BalloonBasket" index="1" node_paths=PackedStringArray("ChainEnd") instance=ExtResource("9_cjup7")]
+position = Vector2(7, -7)
+ChainTexture = ExtResource("10_dwhqi")
+ChainEnd = NodePath("../../../Pendulum2/balloon/rope_end4")
 
-[node name="rope_end2" type="Node2D" parent="Pendulum/BalloonBasket" index="2"]
-position = Vector2(-8.99997, -7.00003)
+[node name="rope3" parent="Pendulum/BalloonBasket" index="2" node_paths=PackedStringArray("ChainEnd") instance=ExtResource("9_cjup7")]
+position = Vector2(3, -7)
+ChainTexture = ExtResource("10_dwhqi")
+ChainEnd = NodePath("../../../Pendulum2/balloon/rope_end3")
 
-[node name="rope_end3" type="Node2D" parent="Pendulum/BalloonBasket" index="3"]
-position = Vector2(9.00002, -6.99997)
+[node name="rope2" parent="Pendulum/BalloonBasket" index="3" node_paths=PackedStringArray("ChainEnd") instance=ExtResource("9_cjup7")]
+position = Vector2(-3, -7)
+ChainTexture = ExtResource("10_dwhqi")
+ChainEnd = NodePath("../../../Pendulum2/balloon/rope_end2")
 
-[node name="rope_end4" type="Node2D" parent="Pendulum/BalloonBasket" index="4"]
-position = Vector2(2.47955e-05, -7)
+[node name="rope" parent="Pendulum/BalloonBasket" index="4" node_paths=PackedStringArray("ChainEnd") instance=ExtResource("9_cjup7")]
+position = Vector2(-7, -7)
+ChainTexture = ExtResource("10_dwhqi")
+ChainEnd = NodePath("../../../Pendulum2/balloon/rope_end")
