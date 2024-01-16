@@ -5,26 +5,36 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Numerics;
 public partial class Mymath : Node{
-    static Godot.Vector2 VectorFromAngleAndMagnitude(float Angle, float Magnitude)
+    public static Godot.Vector2 VectorFromAngleAndMagnitude(double Angle, double Magnitude)
     {
-        return Godot.Vector2.FromAngle(Angle) * Magnitude;
+        return Godot.Vector2.FromAngle((float)Angle) * (float)Magnitude;
     }
-    static float DeltaLerp(float From,float To,float Weight,double Delta){
-        return Mathf.Lerp(From,To,1f - (float)Math.Pow(Weight,Delta));
+
+    // lerp methods
+    public static double GetdeltaLerpweight(double Weight,double Delta){
+        return 1.0 - Math.Pow(Weight,Delta);
     }
-    static float DeltaLerpAngle(float From,float To,float Weight,double Delta){
-        return Mathf.LerpAngle(From,To,1f - (float)Math.Pow(Weight,Delta));
+    public static double DeltaLerp(double From,double To,double Weight,double Delta){
+        return Mathf.Lerp(From,To,GetdeltaLerpweight(Weight,Delta));
     }
-    static float AbsClamp(float Value,float Min,float Max)
+    public static Godot.Vector2 DeltaLerp(Godot.Vector2 From,Godot.Vector2 To,double Weight,double Delta)
+    {
+        return From.Lerp(To,(float)GetdeltaLerpweight(Weight,Delta));
+    }
+    public static double DeltaLerpAngle(double From,double To,double Weight,double Delta)
+    {
+        return Mathf.LerpAngle(From,To,GetdeltaLerpweight(Weight,Delta));
+    }
+    public static double AbsClamp(double Value,double Min,double Max)
     {
         return Mathf.Sign(Value) * Mathf.Clamp(Mathf.Abs(Value),Mathf.Abs(Min),Mathf.Abs(Max));
     }
-    static Godot.Vector2 Mirror(Godot.Vector2 Vector,Godot.Vector2 Mirror)
+    public static Godot.Vector2 Mirror(Godot.Vector2 Vector,Godot.Vector2 Mirror)
     {
         return Vector.Reflect(Mirror).Rotated(MathF.PI);
     }
-    static Godot.Vector2 ClampLength(Godot.Vector2 Vector,float MinLength,float MaxLength)
+    public static Godot.Vector2 ClampLength(Godot.Vector2 Vector,double MinLength,double MaxLength)
     {
-        return Vector.Normalized() * Math.Clamp(Vector.Length(),MinLength,MaxLength);
+        return Vector.Normalized() * (float)Math.Clamp(Vector.Length(),MinLength,MaxLength);
     }
 }
