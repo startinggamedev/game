@@ -1,16 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6ln0vbd57xyf"]
+[gd_scene load_steps=2 format=3 uid="uid://c6ln0vbd57xyf"]
 
 [ext_resource type="PackedScene" uid="uid://cqvoo4upvem11" path="res://world actors/rooms/room_template.tscn" id="1_82q2r"]
-[ext_resource type="PackedScene" uid="uid://bysemkqf7a0n" path="res://world actors/characters/player/player.tscn" id="3_ms760"]
-[ext_resource type="PackedScene" uid="uid://ccfwumk5t3jrt" path="res://world actors/characters/enemy/shooter_umbrella.tscn" id="5_26ly7"]
 
 [node name="room" instance=ExtResource("1_82q2r")]
 
 [node name="world_viewport" parent="SubViewportContainer" index="0"]
 snap_2d_vertices_to_pixel = true
-
-[node name="shooter_umbrella" parent="SubViewportContainer/world_viewport" index="0" instance=ExtResource("5_26ly7")]
-position = Vector2(700, 184)
-
-[node name="player" parent="SubViewportContainer/world_viewport" index="1" instance=ExtResource("3_ms760")]
-position = Vector2(504, 136)

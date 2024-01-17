@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bivr3j5ph0xxn"]
-
-[ext_resource type="Script" path="res://world actors/physics/bodies/PhysicsBody.cs" id="1_kpk23"]
-
-[node name="CSharpBody" type="CharacterBody2D"]
-script = ExtResource("1_kpk23")

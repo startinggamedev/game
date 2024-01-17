@@ -12,8 +12,8 @@ public partial class DuplicateCollisionObjects : Node2D
 	[Export]
 	Godot.Collections.Array<CollisionObject2D> DerivatedCollisionObjects;
  
-	private List<CollisionPolygon2D> DuplicatedBaseBoxes;
-
+	private List<CollisionPolygon2D> DuplicatedBaseBoxes = new List<CollisionPolygon2D>();
+	private bool SetUpBoundingBoxes = true;
 	public void DuplicateBoundingBox()
 	{
 		foreach (var item in DuplicatedBaseBoxes)
@@ -36,5 +36,9 @@ public partial class DuplicateCollisionObjects : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if (SetUpBoundingBoxes){
+			DuplicateBoundingBox();
+			SetUpBoundingBoxes = false;
+		}
 	}
 }

@@ -1,6 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://c0w0qclp1camn"]
+[gd_scene load_steps=11 format=3 uid="uid://c0w0qclp1camn"]
 
-[ext_resource type="PackedScene" uid="uid://owxrflpec5hl" path="res://world actors/physics/bodies/physics_body.tscn" id="1_pjv14"]
+[ext_resource type="PackedScene" uid="uid://owxrflpec5hl" path="res://world actors/physics/bodies/PhysicsBody.tscn" id="1_tdcbu"]
 [ext_resource type="PackedScene" uid="uid://ct6f538hmeg4w" path="res://world actors/characters/components/health/damage detector/damage_detector.tscn" id="2_fw5de"]
 [ext_resource type="Script" path="res://world actors/characters/character.gd" id="2_u70ni"]
 [ext_resource type="Script" path="res://world actors/characters/components/health/damage/damage.gd" id="4_84khx"]
@@ -8,7 +8,6 @@
 [ext_resource type="Script" path="res://world actors/characters/components/health/damage/damage_respects.gd" id="5_fbmix"]
 [ext_resource type="Script" path="res://world actors/characters/components/behaviour/behaviour_manager.gd" id="8_xm4pm"]
 [ext_resource type="Script" path="res://world actors/characters/components/behaviour/state/dead.gd" id="9_g3ml0"]
-[ext_resource type="PackedScene" uid="uid://cv05i3gsh5qwl" path="res://world actors/physics/force fields/character_force_field.tscn" id="12_fd13q"]
 
 [sub_resource type="Resource" id="Resource_lypg1"]
 script = ExtResource("5_fbmix")
@@ -21,12 +20,16 @@ script = ExtResource("4_84khx")
 respect = SubResource("Resource_lypg1")
 damage = 0.0
 
-[node name="character" node_paths=PackedStringArray("damage_detector", "health_manager") groups=["character"] instance=ExtResource("1_pjv14")]
+[node name="character" node_paths=PackedStringArray("damage_detector", "health_manager") groups=["character"] instance=ExtResource("1_tdcbu")]
 floor_stop_on_slope = false
 script = ExtResource("2_u70ni")
 damage_detector = NodePath("damage_detector")
 health_manager = NodePath("health_manager")
 type = 0
+bounciness = 0.0
+weight = 1.0
+intangible = false
+friction_multiplier = 1.0
 
 [node name="damage_detector" parent="." index="0" instance=ExtResource("2_fw5de")]
 damage = SubResource("Resource_n55sb")
@@ -41,8 +44,5 @@ script = ExtResource("8_xm4pm")
 [node name="dead" type="Node" parent="behaviour_manager" index="0"]
 script = ExtResource("9_g3ml0")
 
-[node name="repulsion_field" parent="." index="3" node_paths=PackedStringArray("health_manager", "exceptions") instance=ExtResource("12_fd13q")]
-health_manager = NodePath("../health_manager")
-exceptions = [NodePath("..")]
-magnitude = 200.0
-acceleration = 200.0
+[node name="DuplicateBoundingBox" parent="." index="3" node_paths=PackedStringArray("DerivatedCollisionObjects")]
+DerivatedCollisionObjects = [NodePath(".."), NodePath("../FrictionAreaDetector"), null]

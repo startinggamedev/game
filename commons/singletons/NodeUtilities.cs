@@ -9,7 +9,7 @@ using System.Numerics;
 using System.Text.RegularExpressions;
 public partial class NodeUtilities : Node{
 
-    static bool IsNodeInGroupArray(Node Node,Godot.Collections.Array<StringName> GroupArray)
+    public static bool IsNodeInGroupArray(Node Node,Godot.Collections.Array<StringName> GroupArray)
     {
         Godot.Collections.Array<StringName> NodeGroups = Node.GetGroups();
         for(int i = NodeGroups.Count - 1;i >= 0;i--){
@@ -20,7 +20,7 @@ public partial class NodeUtilities : Node{
         return false;
     }
 
-    static Node2D GetNearestNodeInGroup(Godot.Vector2 ComparisionPosition,StringName Group)
+    public static Node2D GetNearestNodeInGroup(Godot.Vector2 ComparisionPosition,StringName Group)
     {
         SceneTree MySceneTree = (SceneTree)Engine.GetMainLoop();
         Godot.Collections.Array<Node> GroupNodes = MySceneTree.GetNodesInGroup(Group);
@@ -43,7 +43,7 @@ public partial class NodeUtilities : Node{
         }
         return NearestNode;
     }
-    static Node AddChildTo(Godot.Collections.Array<Node> PossibleParents,Node Child)
+    public static Node AddChildTo(Godot.Collections.Array<Node> PossibleParents,Node Child)
     {
         for(int i = PossibleParents.Count -1;i >= 0;i--){
             Node CurrentParent = PossibleParents[i];

@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://owxrflpec5hl"]
+
+[ext_resource type="Script" path="res://world actors/physics/bodies/PhysicsBody.cs" id="1_ayufm"]
+[ext_resource type="Script" path="res://world actors/physics/bodies/DuplicateCollisionObjects.cs" id="2_kd6bm"]
+[ext_resource type="Script" path="res://world actors/physics/bodies/FrictionAreaDetector.cs" id="3_15op3"]
+[ext_resource type="Script" path="res://world actors/physics/bodies/ForceFieldDetector.cs" id="4_h7ayp"]
+
+[node name="PhysicsBody" type="CharacterBody2D" groups=["PhysicsBody"]]
+z_as_relative = false
+collision_layer = 0
+motion_mode = 1
+wall_min_slide_angle = 0.785398
+script = ExtResource("1_ayufm")
+
+[node name="DuplicateBoundingBox" type="Node2D" parent="." node_paths=PackedStringArray("BaseBoundBox", "DerivatedCollisionObjects")]
+script = ExtResource("2_kd6bm")
+BaseBoundBox = NodePath("BodyBoundingBox")
+DerivatedCollisionObjects = [NodePath(".."), NodePath("../FrictionAreaDetector"), NodePath("../ForceFieldDetector")]
+
+[node name="BodyBoundingBox" type="CollisionPolygon2D" parent="DuplicateBoundingBox"]
+
+[node name="FrictionAreaDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("3_15op3")
+
+[node name="ForceFieldDetector" type="Area2D" parent="." node_paths=PackedStringArray("MyPhysicsBody")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("4_h7ayp")
+MyPhysicsBody = NodePath("..")

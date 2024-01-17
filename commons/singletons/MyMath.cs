@@ -12,7 +12,8 @@ public class Mymath{
 
     // lerp methods
     public static double GetdeltaLerpweight(double Weight,double Delta){
-        return Math.Pow(0.5,Delta * Weight);
+        Weight = Math.Abs(Weight - 1f);
+        return 1- Math.Pow(Weight,Delta);
     }
     public static double DeltaLerp(double From,double To,double Weight,double Delta){
         return Mathf.Lerp(From,To,GetdeltaLerpweight(Weight,Delta));

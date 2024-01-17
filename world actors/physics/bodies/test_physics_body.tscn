@@ -1,8 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4jeqb3kkyl2n"]
+[gd_scene load_steps=2 format=3 uid="uid://c4jeqb3kkyl2n"]
 
-[ext_resource type="PackedScene" uid="uid://owxrflpec5hl" path="res://world actors/physics/bodies/physics_body.tscn" id="1_jhsmu"]
-[ext_resource type="Script" path="res://world actors/physics/bodies/test_physics_body.gd" id="2_1p2ew"]
+[ext_resource type="PackedScene" uid="uid://owxrflpec5hl" path="res://world actors/physics/bodies/PhysicsBody.tscn" id="1_jhsmu"]
 
-[node name="physics_manager" instance=ExtResource("1_jhsmu")]
-script = ExtResource("2_1p2ew")
-can_move = false
+[node name="TestPhysicsBody" instance=ExtResource("1_jhsmu")]
+
+[node name="BodyBoundingBox" parent="DuplicateBoundingBox" index="0"]
+polygon = PackedVector2Array(-24, 0, 0, 64, 208, 0, 0, -56)
