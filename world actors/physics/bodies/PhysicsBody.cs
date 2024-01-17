@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Numerics;
 
@@ -12,12 +13,14 @@ public partial class PhysicsBody : CharacterBody2D{
 	[Export(PropertyHint.Range,"0.,1.,0.02")]
 	public float FrictionMultiplier = 1f;
 
+//Physics Properties
 	public bool collided = false;
-
+	private List<float> FrictionList;
 	private List<Godot.Vector2> TargetVelocities = new List<Godot.Vector2>();
 	private Godot.Vector2 AccelerationDirection;
 	private Godot.Vector2 CollisionNormal = new Godot.Vector2(0f,0f);
-
+//Node References
+	private FrictionAreaDetector MyFrictionAreaDetector;
 
 	public void SetCollidability(bool CanCollide)
 	{
@@ -30,9 +33,21 @@ public partial class PhysicsBody : CharacterBody2D{
 		(Acceleration * ForceTargetVelocity.Normalized());
 		TargetVelocities.Add(ForceTargetVelocity);
 	}
-	public void ApplyFriction(float Friction,double Delta)
+
+	public void AddFriction(float FrictionToAdd){
+		FrictionList.Add(FrictionToAdd);
+	}
+
+	public void AddFriction(List<float> FrictionToAdd){
+		FrictionList.Concat(FrictionToAdd);
+	}
+
+	private void ApplyFriction(List<float> FrictionCollection,double Delta)
 	{
-		Friction = Friction * FrictionMultiplier;
+		double Friction = 0;
+		for (int i = FrictionCollection.Count -1;i < 0;i--){
+			Friction = Mymath.DeltaLerp(Friction,FrictionMultiplier,FrictionCollection[i],Delta);
+		}
 		Velocity = Mymath.DeltaLerp(Velocity,Godot.Vector2.Zero,Friction,Delta);
 	}
 	private void CalculateVelocity(double delta)
@@ -59,9 +74,17 @@ public partial class PhysicsBody : CharacterBody2D{
 			Bounce(GetWallNormal());
 		}
 	}
-	public override void _PhysicsProcess(double delta)
+
+    public override void _Ready()
+    {
+		MyFrictionAreaDetector = GetNode<FrictionAreaDetector>("FrictionAreaDetector");
+    }
+
+    public override void _PhysicsProcess(double delta)
 	{
 		CalculateVelocity(delta);
+		ApplyFriction(MyFrictionAreaDetector.DetectedFriction,delta);
 		Move();
+		FrictionList.Clear();
 	}
 }

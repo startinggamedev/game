@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Numerics;
-public partial class Mymath : Node{
+public class Mymath{
     public static Godot.Vector2 VectorFromAngleAndMagnitude(double Angle, double Magnitude)
     {
         return Godot.Vector2.FromAngle((float)Angle) * (float)Magnitude;
@@ -12,7 +12,7 @@ public partial class Mymath : Node{
 
     // lerp methods
     public static double GetdeltaLerpweight(double Weight,double Delta){
-        return 1.0 - Math.Pow(Weight,Delta);
+        return Math.Pow(0.5,Delta * Weight);
     }
     public static double DeltaLerp(double From,double To,double Weight,double Delta){
         return Mathf.Lerp(From,To,GetdeltaLerpweight(Weight,Delta));
