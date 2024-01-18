@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=3 uid="uid://bc0qxxq5kxtt4"]
 
-[ext_resource type="PackedScene" uid="uid://c0w0qclp1camn" path="res://world actors/characters/character.tscn" id="1_55lax"]
+[ext_resource type="PackedScene" uid="uid://c0w0qclp1camn" path="res://world actors/characters/Character.tscn" id="1_55lax"]
 [ext_resource type="Script" path="res://world actors/items/weapons/ranged/components/bullets/bullet.gd" id="2_hbd1r"]
 [ext_resource type="Script" path="res://world actors/characters/components/health/damage/damage_respects.gd" id="3_5uggq"]
 [ext_resource type="Script" path="res://world actors/characters/components/health/damage_bump_types/velocity_bump_type.gd" id="3_qpboi"]

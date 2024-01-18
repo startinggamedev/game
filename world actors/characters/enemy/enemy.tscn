@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cob38cql5hxyl"]
 
-[ext_resource type="PackedScene" uid="uid://c0w0qclp1camn" path="res://world actors/characters/character.tscn" id="1_yisci"]
+[ext_resource type="PackedScene" uid="uid://c0w0qclp1camn" path="res://world actors/characters/Character.tscn" id="1_yisci"]
 
 [node name="enemy" groups=["enemy"] instance=ExtResource("1_yisci")]
 z_index = -100

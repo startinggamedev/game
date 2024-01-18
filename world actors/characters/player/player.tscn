@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=3 uid="uid://bysemkqf7a0n"]
 
-[ext_resource type="PackedScene" uid="uid://c0w0qclp1camn" path="res://world actors/characters/character.tscn" id="1_8rkyw"]
+[ext_resource type="PackedScene" uid="uid://c0w0qclp1camn" path="res://world actors/characters/Character.tscn" id="1_8rkyw"]
 [ext_resource type="Script" path="res://world actors/characters/player/moving.gd" id="2_teljm"]
 [ext_resource type="PackedScene" uid="uid://dt22acx54rtdu" path="res://world actors/items/weapons/ranged/cannon.tscn" id="4_6xrye"]
 [ext_resource type="Texture2D" uid="uid://cmpva2w5l2ifp" path="res://visuals/sprites/balloon.png" id="4_8t2c0"]

@@ -1,0 +1,29 @@
+[gd_scene load_steps=8 format=3 uid="uid://c0w0qclp1camn"]
+
+[ext_resource type="PackedScene" uid="uid://owxrflpec5hl" path="res://world actors/physics/bodies/PhysicsBody.tscn" id="1_xhh6b"]
+[ext_resource type="Script" path="res://world actors/characters/Character.cs" id="2_8mtbh"]
+[ext_resource type="PackedScene" uid="uid://ct6f538hmeg4w" path="res://world actors/characters/components/health/damage detector/damage_detector.tscn" id="3_1tl25"]
+[ext_resource type="Script" path="res://world actors/characters/components/health/damage detector/DamageDetector.cs" id="4_0vo2r"]
+[ext_resource type="PackedScene" uid="uid://t8r76aia8n7a" path="res://world actors/characters/components/health/health manager/HealthManager.tscn" id="5_n3jdd"]
+[ext_resource type="Script" path="res://world actors/characters/components/behaviour/behaviour_manager.gd" id="6_g4qke"]
+[ext_resource type="Script" path="res://world actors/characters/components/behaviour/state/dead.gd" id="7_8objd"]
+
+[node name="Character" groups=["character"] instance=ExtResource("1_xhh6b")]
+floor_stop_on_slope = false
+script = ExtResource("2_8mtbh")
+
+[node name="DamageDetector" parent="." index="0" instance=ExtResource("3_1tl25")]
+script = ExtResource("4_0vo2r")
+
+[node name="health_manager" parent="." index="1" instance=ExtResource("5_n3jdd")]
+hp = 1.0
+
+[node name="behaviour_manager" type="Node" parent="." index="2"]
+process_mode = 3
+script = ExtResource("6_g4qke")
+
+[node name="dead" type="Node" parent="behaviour_manager" index="0"]
+script = ExtResource("7_8objd")
+
+[node name="DuplicateBoundingBox" parent="." index="3" node_paths=PackedStringArray("DerivatedCollisionObjects")]
+DerivatedCollisionObjects = [NodePath(".."), NodePath("../FrictionAreaDetector"), null]
