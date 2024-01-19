@@ -1,16 +1,32 @@
 using Godot;
 using System;
 
-public partial class Character : CharacterBody2D
+public partial class Character : PhysicsBody
 {
-	public const float Speed = 300.0f;
-	public const float JumpVelocity = -400.0f;
+	#region exportedvariables
+	[Export]
+	public Gl.Types Type;
+    
+	#endregion
+	#region ExportedNodes
 
-	// Get the gravity from the project settings to be synced with RigidBody nodes.
-	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-
-	public override void _PhysicsProcess(double delta)
-	{
-		
-	}
+	[Export]
+	HealthManager MyHealthManager;
+	[Export]
+	DamageDetector MyDamagedetector;
+	#endregion
+	#region processes
+    public override void _Ready()
+    {
+        base._Ready();
+    }
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+    }
+    public override void _PhysicsProcess(double delta)
+    {
+        base._PhysicsProcess(delta);
+    }
+	#endregion
 }

@@ -1,0 +1,7 @@
+using godot;
+using system;
+public static class CharacterConstst : Godot{
+    static enum Types {All,Player,Enemy,AllWeapon,PlayerWeapon,EnemyWeapon}
+    prel
+    static Array<>
+}

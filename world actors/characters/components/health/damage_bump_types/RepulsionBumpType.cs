@@ -3,5 +3,9 @@ using System;
 
 public partial class RepulsionBumpType : DamageBumpType
 {
-    public override Godot.Vector2 BumpFunction(doub)
+    [Export]
+    private float BumpMagnitude;
+    public override Godot.Vector2 BumpFunction(double delta,Character Bumper,Character Bumped){
+        return (Bumped.GlobalPosition - Bumper.GlobalPosition).Normalized() * BumpMagnitude;
+    }
 }

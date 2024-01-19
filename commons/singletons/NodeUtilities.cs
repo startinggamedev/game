@@ -7,8 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Numerics;
 using System.Text.RegularExpressions;
-public partial class NodeUtilities : Node{
-
+public partial class NodeUtilities : GodotObject{
     public static bool IsNodeInGroupArray(Node Node,Godot.Collections.Array<StringName> GroupArray)
     {
         Godot.Collections.Array<StringName> NodeGroups = Node.GetGroups();
