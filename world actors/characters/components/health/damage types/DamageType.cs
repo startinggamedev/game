@@ -7,6 +7,6 @@ private Gl.Types Type;
 private Godot.Collections.Array<Gl.Types> Damageables;
 public static bool CanDamage(DamageType This,DamageType With)
 {
-    return With.Damageables.Contains(This.Type);
+	return With.Damageables.Contains(This.Type);
 }
 }

@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://cqvoo4upvem11"]
 
-[ext_resource type="Script" path="res://world actors/rooms/room_template.gd" id="1_p6dc4"]
+[ext_resource type="Script" path="res://world actors/rooms/RoomTemplate.cs" id="1_34x76"]
 [ext_resource type="Shader" path="res://visuals/shaders/outline.gdshader" id="2_rqsn5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_13t1s"]
 shader = ExtResource("2_rqsn5")
 
 [node name="room" type="Node2D"]
-script = ExtResource("1_p6dc4")
+script = ExtResource("1_34x76")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 material = SubResource("ShaderMaterial_13t1s")

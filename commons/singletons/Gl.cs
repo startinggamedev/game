@@ -8,10 +8,11 @@ public partial class Gl : Node
 {
     public enum Types {All,Player,Enemy,AllWeapon,PlayerWeapon,EnemyWeapon}
     public static List<DamageType> DamageTypes = new List<DamageType>(){
-        GD.Load<DamageType>("res://world actors/characters/components/health/damage types/all_type.tres"),
-        GD.Load<DamageType>("res://world actors/characters/components/health/damage types/player_type.tres"),
-        GD.Load<DamageType>("res://world actors/characters/components/health/damage types/enemy_type.tres"),
-        GD.Load<DamageType>("res://world actors/characters/components/health/damage types/weapon_all_type.tres"),
-        GD.Load<DamageType>("res://world actors/characters/components/health/damage types/weapon_player_type.tres"),
-        GD.Load<DamageType>("res://world actors/characters/components/health/damage types/weapon_enemy_type.tres")};
+        GD.Load<DamageType>("res://world actors/characters/components/health/damage types/AllType.tres"),
+        GD.Load<DamageType>("res://world actors/characters/components/health/damage types/PlayerType.tres"),
+        GD.Load<DamageType>("res://world actors/characters/components/health/damage types/EnemyType.tres"),
+        GD.Load<DamageType>("res://world actors/characters/components/health/damage types/AllWeaponType.tres"),
+        GD.Load<DamageType>("res://world actors/characters/components/health/damage types/PlayerWeaponType.tres"),
+        GD.Load<DamageType>("res://world actors/characters/components/health/damage types/EnemyWeaponType.tres")};
+    public Node CharacterHolder;
 }

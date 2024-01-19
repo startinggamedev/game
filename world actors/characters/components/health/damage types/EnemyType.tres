@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://fkbpwlhmyp8t"]
+
+[ext_resource type="Script" path="res://world actors/characters/components/health/damage types/DamageType.cs" id="1_87a51"]
+
+[resource]
+script = ExtResource("1_87a51")
+Type = 0
+Damageables = null

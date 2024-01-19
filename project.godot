@@ -18,7 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Ui="*res://commons/singletons/ui_manager.tscn"
-Gl="*res://commons/singletons/Gl.cs"
+Singleton="*res://commons/singletons/Gl.cs"
 
 [display]
 

@@ -16,8 +16,6 @@ public partial class HealthManager : Node
 	[Export]
 	private float IframeLengthSec;
 	[Export]
-	private Area2D DamageDetector;
-	[Export]
 	public Godot.Collections.Array<ExtraDamage> MyExtraDamage;
 	[Export]
 	private DamageDetector MyDamageDetector;

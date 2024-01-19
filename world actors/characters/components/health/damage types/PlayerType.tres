@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://5cocqxgokcvp"]
+
+[ext_resource type="Script" path="res://world actors/characters/components/health/damage types/DamageType.cs" id="1_1nkxf"]
+
+[resource]
+script = ExtResource("1_1nkxf")
+Type = 1
+Damageables = Array[int]([0, 2])

@@ -59,8 +59,8 @@ public partial class PhysicsBody : CharacterBody2D{
 		{
 			Friction = Mathf.Lerp(Friction,FrictionMultiplier,FrictionCollection[i]);
 		}
-		Momentum = Mymath.DeltaLerp(Momentum,Godot.Vector2.Zero,Friction,Delta);
-		GD.Print(Mymath.DeltaLerp(0f,1f,Friction,Delta));
+		Momentum = MyMath.DeltaLerp(Momentum,Godot.Vector2.Zero,Friction,Delta);
+		GD.Print(MyMath.DeltaLerp(0f,1f,Friction,Delta));
 	}
 	private void CalculateMomentum(double delta)
 	{
@@ -78,7 +78,7 @@ public partial class PhysicsBody : CharacterBody2D{
 
 	private void Bounce(Godot.Vector2 Mirror,float BounceScale)
 	{
-		Momentum = Mymath.Mirror(Momentum,Mirror.Normalized()) * BounceScale;
+		Momentum = MyMath.Mirror(Momentum,Mirror.Normalized()) * BounceScale;
 	}
 	private void Move()
 	{

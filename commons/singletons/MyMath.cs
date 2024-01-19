@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Numerics;
-public class Mymath{
+public class MyMath{
     public static Godot.Vector2 VectorFromAngleAndMagnitude(double Angle, double Magnitude)
     {
         return Godot.Vector2.FromAngle((float)Angle) * (float)Magnitude;

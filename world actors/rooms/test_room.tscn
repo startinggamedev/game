@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cqvoo4upvem11" path="res://world actors/rooms/room_template.tscn" id="1_82q2r"]
 
 [node name="room" instance=ExtResource("1_82q2r")]
+script = null
 
 [node name="world_viewport" parent="SubViewportContainer" index="0"]
 snap_2d_vertices_to_pixel = true

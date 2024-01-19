@@ -11,12 +11,14 @@
 [node name="Character" groups=["character"] instance=ExtResource("1_xhh6b")]
 floor_stop_on_slope = false
 script = ExtResource("2_8mtbh")
+Type = 0
 
-[node name="DamageDetector" parent="." index="0" instance=ExtResource("3_1tl25")]
+[node name="DamageDetector" parent="." index="0" node_paths=PackedStringArray("DamageBumpTypes") instance=ExtResource("3_1tl25")]
 script = ExtResource("4_0vo2r")
+DamageBumpTypes = []
+MyDamageRes = null
 
-[node name="health_manager" parent="." index="1" instance=ExtResource("5_n3jdd")]
-hp = 1.0
+[node name="HealthManager" parent="." index="1" instance=ExtResource("5_n3jdd")]
 
 [node name="behaviour_manager" type="Node" parent="." index="2"]
 process_mode = 3
