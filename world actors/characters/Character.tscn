@@ -20,12 +20,5 @@ MyDamageRes = null
 
 [node name="HealthManager" parent="." index="1" instance=ExtResource("5_n3jdd")]
 
-[node name="behaviour_manager" type="Node" parent="." index="2"]
-process_mode = 3
-script = ExtResource("6_g4qke")
-
-[node name="dead" type="Node" parent="behaviour_manager" index="0"]
-script = ExtResource("7_8objd")
-
 [node name="DuplicateBoundingBox" parent="." index="3" node_paths=PackedStringArray("DerivatedCollisionObjects")]
 DerivatedCollisionObjects = [NodePath(".."), NodePath("../FrictionAreaDetector"), null]
