@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ct6f538hmeg4w"]
-
-[ext_resource type="Script" path="res://world actors/characters/components/health/damage detector/damage_detector.gd" id="1_n8iph"]
-
-[node name="damage_detector" type="Area2D"]
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("1_n8iph")

@@ -1,79 +1,23 @@
-[gd_scene load_steps=24 format=3 uid="uid://bysemkqf7a0n"]
+[gd_scene load_steps=9 format=3 uid="uid://bysemkqf7a0n"]
 
-[ext_resource type="PackedScene" uid="uid://c0w0qclp1camn" path="res://world actors/characters/Character.tscn" id="1_8rkyw"]
-[ext_resource type="Script" path="res://world actors/characters/player/moving.gd" id="2_teljm"]
-[ext_resource type="PackedScene" uid="uid://dt22acx54rtdu" path="res://world actors/items/weapons/ranged/cannon.tscn" id="4_6xrye"]
+[ext_resource type="PackedScene" uid="uid://bi7c5jkpnp3sx" path="res://world actors/characters/Character.tscn" id="1_8rkyw"]
 [ext_resource type="Texture2D" uid="uid://cmpva2w5l2ifp" path="res://visuals/sprites/balloon.png" id="4_8t2c0"]
-[ext_resource type="Script" path="res://world actors/characters/components/health/damage/damage_respects.gd" id="5_x148i"]
-[ext_resource type="Script" path="res://world actors/items/weapons/components/aim_types/mouse_aim.gd" id="6_3es1l"]
-[ext_resource type="Script" path="res://world actors/characters/components/health/damage/damage.gd" id="6_l7qkg"]
 [ext_resource type="Script" path="res://world actors/physics/objects/pendulum.gd" id="8_uieam"]
-[ext_resource type="PackedScene" uid="uid://u46x63gfopwt" path="res://world actors/characters/components/set uppers/weapon_setupper.tscn" id="9_a5lv2"]
 [ext_resource type="PackedScene" uid="uid://b1y26j6o6bqd1" path="res://visuals/chains/chain.tscn" id="9_cjup7"]
 [ext_resource type="Texture2D" uid="uid://dq71dt2x17p3w" path="res://visuals/sprites/rope.png" id="10_dwhqi"]
-[ext_resource type="PackedScene" uid="uid://dgb8o22skpjt1" path="res://world actors/characters/components/mechanics/rockets/small_balloon_rocket.tscn" id="11_ivo43"]
 [ext_resource type="PackedScene" uid="uid://ct2pmyl2gjme" path="res://world actors/physics/objects/pendulum.tscn" id="12_c2ry5"]
-[ext_resource type="Script" path="res://commons/triggers/triggers/key_triggerer.gd" id="12_qloqc"]
-[ext_resource type="Script" path="res://world actors/items/weapons/components/aim_types/arrow_aim.gd" id="13_dn01u"]
 [ext_resource type="Texture2D" uid="uid://tff8jhqfddpx" path="res://visuals/sprites/balloon_basket.png" id="13_gvqgu"]
-
-[sub_resource type="Resource" id="Resource_uttxn"]
-script = ExtResource("13_dn01u")
-
-[sub_resource type="Resource" id="Resource_0ku0e"]
-script = ExtResource("12_qloqc")
-trigger_input_action = "move"
-
-[sub_resource type="Resource" id="Resource_t2077"]
-script = ExtResource("5_x148i")
-defense = true
-iframe = true
-invincibility = true
-
-[sub_resource type="Resource" id="Resource_73g6r"]
-script = ExtResource("6_l7qkg")
-respect = SubResource("Resource_t2077")
-damage = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u1inq"]
 radius = 24.1868
 
-[sub_resource type="Resource" id="Resource_toopx"]
-script = ExtResource("6_3es1l")
-
-[sub_resource type="Resource" id="Resource_v0k2y"]
-script = ExtResource("12_qloqc")
-trigger_input_action = "attack"
-
 [node name="player" groups=["player"] instance=ExtResource("1_8rkyw")]
-type = 1
-bounciness = 0.282
 
-[node name="Rocket" parent="." index="0" node_paths=PackedStringArray("body") instance=ExtResource("11_ivo43")]
-z_index = -1
-position = Vector2(0, 28)
-body = NodePath("..")
-aim_type = SubResource("Resource_uttxn")
-triggerer = SubResource("Resource_0ku0e")
-
-[node name="damage_detector" parent="." index="1"]
-damage = SubResource("Resource_73g6r")
-
-[node name="health_manager" parent="." index="2"]
-hp = 999.0
-iframe_length_sec = 0.05
-
-[node name="behaviour_manager" parent="." index="3" node_paths=PackedStringArray("current_state")]
-current_state = NodePath("moving")
-
-[node name="moving" type="Node" parent="behaviour_manager" index="1"]
-script = ExtResource("2_teljm")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="5"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="3"]
 position = Vector2(0, -7)
 shape = SubResource("CircleShape2D_u1inq")
 
-[node name="Pendulum2" type="Node2D" parent="." index="6"]
+[node name="Pendulum2" type="Node2D" parent="." index="4"]
 script = ExtResource("8_uieam")
 gravity = Vector2(0, 30)
 damping = 0.05
@@ -94,37 +38,29 @@ position = Vector2(6, 29)
 [node name="rope_end4" type="Node2D" parent="Pendulum2/balloon" index="3"]
 position = Vector2(10, 29)
 
-[node name="Pendulum" parent="." index="7" instance=ExtResource("12_c2ry5")]
+[node name="Pendulum" parent="." index="5" instance=ExtResource("12_c2ry5")]
 position = Vector2(0, 29)
 
 [node name="BalloonBasket" type="Sprite2D" parent="Pendulum" index="0"]
 position = Vector2(0, 40)
 texture = ExtResource("13_gvqgu")
 
-[node name="weapon_setupper" parent="Pendulum/BalloonBasket" index="0" node_paths=PackedStringArray("character") instance=ExtResource("9_a5lv2")]
-position = Vector2(0, -1)
-rotation = 1.5708
-weapon = ExtResource("4_6xrye")
-aim_type = SubResource("Resource_toopx")
-triggerer = SubResource("Resource_v0k2y")
-character = NodePath("../../..")
-
-[node name="rope4" parent="Pendulum/BalloonBasket" index="1" node_paths=PackedStringArray("ChainEnd") instance=ExtResource("9_cjup7")]
+[node name="rope4" parent="Pendulum/BalloonBasket" index="0" node_paths=PackedStringArray("ChainEnd") instance=ExtResource("9_cjup7")]
 position = Vector2(7, -7)
 ChainTexture = ExtResource("10_dwhqi")
 ChainEnd = NodePath("../../../Pendulum2/balloon/rope_end4")
 
-[node name="rope3" parent="Pendulum/BalloonBasket" index="2" node_paths=PackedStringArray("ChainEnd") instance=ExtResource("9_cjup7")]
+[node name="rope3" parent="Pendulum/BalloonBasket" index="1" node_paths=PackedStringArray("ChainEnd") instance=ExtResource("9_cjup7")]
 position = Vector2(3, -7)
 ChainTexture = ExtResource("10_dwhqi")
 ChainEnd = NodePath("../../../Pendulum2/balloon/rope_end3")
 
-[node name="rope2" parent="Pendulum/BalloonBasket" index="3" node_paths=PackedStringArray("ChainEnd") instance=ExtResource("9_cjup7")]
+[node name="rope2" parent="Pendulum/BalloonBasket" index="2" node_paths=PackedStringArray("ChainEnd") instance=ExtResource("9_cjup7")]
 position = Vector2(-3, -7)
 ChainTexture = ExtResource("10_dwhqi")
 ChainEnd = NodePath("../../../Pendulum2/balloon/rope_end2")
 
-[node name="rope" parent="Pendulum/BalloonBasket" index="4" node_paths=PackedStringArray("ChainEnd") instance=ExtResource("9_cjup7")]
+[node name="rope" parent="Pendulum/BalloonBasket" index="3" node_paths=PackedStringArray("ChainEnd") instance=ExtResource("9_cjup7")]
 position = Vector2(-7, -7)
 ChainTexture = ExtResource("10_dwhqi")
 ChainEnd = NodePath("../../../Pendulum2/balloon/rope_end")

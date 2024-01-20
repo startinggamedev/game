@@ -12,12 +12,12 @@ motion_mode = 1
 wall_min_slide_angle = 0.785398
 script = ExtResource("1_ayufm")
 
-[node name="DuplicateBoundingBox" type="Node2D" parent="." node_paths=PackedStringArray("BaseBoundBox", "DerivatedCollisionObjects")]
+[node name="BodyBoundingBoxDuplicator" type="Node2D" parent="." node_paths=PackedStringArray("BaseBoundBox", "DerivatedCollisionObjects")]
 script = ExtResource("2_kd6bm")
 BaseBoundBox = NodePath("BodyBoundingBox")
 DerivatedCollisionObjects = [NodePath(".."), NodePath("../FrictionAreaDetector"), NodePath("../ForceFieldDetector")]
 
-[node name="BodyBoundingBox" type="CollisionPolygon2D" parent="DuplicateBoundingBox"]
+[node name="BodyBoundingBox" type="CollisionPolygon2D" parent="BodyBoundingBoxDuplicator"]
 
 [node name="FrictionAreaDetector" type="Area2D" parent="."]
 collision_layer = 0

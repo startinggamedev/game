@@ -74,7 +74,7 @@ public partial class PhysicsBody : CharacterBody2D{
 		Momentum = Momentum.MoveToward(TargetMomentum,AccelerationDirection.Length() * (float)delta);
 		AccelerationDirection = new Godot.Vector2(0f,0f);
 		TargetVelocities.Clear();
-	}
+}
 
 	private void Bounce(Godot.Vector2 Mirror,float BounceScale)
 	{

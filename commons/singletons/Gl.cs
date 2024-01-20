@@ -15,4 +15,5 @@ public partial class Gl : Node
         GD.Load<DamageType>("res://world actors/characters/components/health/damage types/PlayerWeaponType.tres"),
         GD.Load<DamageType>("res://world actors/characters/components/health/damage types/EnemyWeaponType.tres")};
     public Node CharacterHolder;
+    public enum TriggerStates {RELEASED,PRESSED,HELD}
 }
