@@ -1,7 +1,6 @@
 using Godot;
 using System;
-
-public partial class DamageDetector : Area2D
+public partial class DamageDetector : Area2D,IUsesType
 {
 	[Export]
 	HealthManager MyHealthManager;
@@ -20,9 +19,20 @@ public partial class DamageDetector : Area2D
 		Monitorable = IsMonitorable;
 	}
 
+	public void SetUpType(int MyType)
+	{
+		MyDamageType = Gl.DamageTypes[MyType];
+	}
+	public int GetMyType()
+	{
+		int MyType = (int)Gl.Types.All;
+		if (MyCharacter is not null){MyType = MyCharacter.GetMyType();}
+		return MyType;
+	}
+
 	public override void _Ready()
 	{
-		if (MyCharacter is not null){MyDamageType = Gl.DamageTypes[(int)MyCharacter.Type];}
+		SetUpType(GetMyType());
 		if (MyHealthManager is not null){ MyHealthManager.VitalityStatus += ToggleMonitorability;}
 	}
 

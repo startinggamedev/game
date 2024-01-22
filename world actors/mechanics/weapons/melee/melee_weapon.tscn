@@ -1,0 +1,119 @@
+[gd_scene load_steps=19 format=3 uid="uid://emihm1ccreac"]
+
+[ext_resource type="PackedScene" uid="uid://cnotxler5hmy4" path="res://world actors/mechanics/weapons/Weapon.tscn" id="1_jwrx8"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/melee/components/melee_weapon.gd" id="2_0y8ql"]
+[ext_resource type="Script" path="res://commons/triggers/triggers/key_triggerer.gd" id="2_5g8wh"]
+[ext_resource type="Script" path="res://world actors/characters/components/health/damage detector/damage_detector.gd" id="2_60jio"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/state/weapon_state.gd" id="2_tn8wt"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/melee/components/melee_weapon_manager.gd" id="3_pxjv4"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/weapon_state_exit/on_trigger_weapon_state_exit.gd" id="3_qotr0"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/weapon_state_exit/weapon_state_exit.gd" id="4_14pgr"]
+[ext_resource type="Script" path="res://world actors/characters/components/health/damage/damage_respects.gd" id="8_ustne"]
+[ext_resource type="Script" path="res://world actors/characters/components/health/damage/damage.gd" id="9_weme7"]
+
+[sub_resource type="Resource" id="Resource_hyxes"]
+script = ExtResource("2_5g8wh")
+
+[sub_resource type="Resource" id="Resource_i8b52"]
+script = ExtResource("4_14pgr")
+next_state_path = NodePath("../cooldown")
+
+[sub_resource type="Animation" id="Animation_vjofs"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blade:rotation")
+tracks/0/interp = 3
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.5, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 2.07053, 2.07053, 1, 1),
+"update": 0,
+"values": [0.0, 4.71239, 3.14159, 2.96706, 3.31613, 6.28319]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("weapon_manager/attack:state_exit")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Array[ExtResource("4_14pgr")]([]), Array[ExtResource("4_14pgr")]([SubResource("Resource_i8b52")])]
+}
+
+[sub_resource type="Resource" id="Resource_8tpio"]
+script = ExtResource("3_qotr0")
+compatible_triggers = Array[int]([1, 2])
+next_state_path = NodePath("../attack")
+
+[sub_resource type="Animation" id="Animation_5wcuy"]
+resource_name = "cooldown"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon_manager/cooldown:state_exit")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Array[ExtResource("4_14pgr")]([]), Array[ExtResource("4_14pgr")]([SubResource("Resource_8tpio")])]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7n1xp"]
+_data = {
+"attack": SubResource("Animation_vjofs"),
+"cooldown": SubResource("Animation_5wcuy")
+}
+
+[sub_resource type="Resource" id="Resource_qidba"]
+script = ExtResource("8_ustne")
+defense = true
+iframe = true
+invincibility = true
+
+[sub_resource type="Resource" id="Resource_0hb2w"]
+script = ExtResource("9_weme7")
+respect = SubResource("Resource_qidba")
+damage = 1.0
+
+[node name="weapon" instance=ExtResource("1_jwrx8")]
+script = ExtResource("2_0y8ql")
+attack_type = SubResource("Resource_hyxes")
+
+[node name="weapon_manager" parent="." index="0" node_paths=PackedStringArray("animation_player", "current_state")]
+script = ExtResource("3_pxjv4")
+animation_player = NodePath("../AnimationPlayer")
+current_state = NodePath("cooldown")
+
+[node name="cooldown" type="Node" parent="weapon_manager" index="0"]
+script = ExtResource("2_tn8wt")
+
+[node name="attack" type="Node" parent="weapon_manager" index="1"]
+script = ExtResource("2_tn8wt")
+attack_state = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_7n1xp")
+}
+
+[node name="blade" type="Node2D" parent="." index="2"]
+
+[node name="DamageDetector" type="Area2D" parent="blade" index="0"]
+position = Vector2(-6, 0)
+collision_layer = 2
+collision_mask = 2
+monitoring = false
+script = ExtResource("2_60jio")
+damage_bump_magnitude = 200.0
+damage_type = 1
+damage = SubResource("Resource_0hb2w")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="blade/DamageDetector" index="0"]
+polygon = PackedVector2Array(-2, -2, -2, 2, 9, 2, 9, -2)

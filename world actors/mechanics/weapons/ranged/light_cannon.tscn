@@ -1,0 +1,163 @@
+[gd_scene load_steps=18 format=3 uid="uid://i5b37lnp4pp8"]
+
+[ext_resource type="PackedScene" uid="uid://bmjimljr4yt8r" path="res://world actors/mechanics/weapons/ranged/RangedWeapon.tscn" id="1_efvor"]
+[ext_resource type="PackedScene" uid="uid://7e48plb5fr25" path="res://world actors/mechanics/weapons/ranged/components/bullets/light_bullet.tscn" id="2_562ga"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/weapon_state_exit/on_trigger_weapon_state_exit.gd" id="3_hcpre"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/weapon_state_exit/on_ammo_run_out.gd" id="4_qj3de"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/weapon_state_exit/weapon_state_exit.gd" id="5_q4t41"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/ranged/components/barrels/barrel.gd" id="6_5em23"]
+[ext_resource type="Texture2D" uid="uid://b32ea6ahdk0uw" path="res://visuals/sprites/light cannon.png" id="7_muhxd"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/aim_node/aim_node.gd" id="8_hemfy"]
+
+[sub_resource type="Animation" id="Animation_fdaj3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon_manager/reload:state_exit")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Array[ExtResource("5_q4t41")]([])]
+}
+
+[sub_resource type="Resource" id="Resource_mxwj6"]
+script = ExtResource("4_qj3de")
+next_state_path = NodePath("../cooldown")
+
+[sub_resource type="Resource" id="Resource_awhru"]
+script = ExtResource("5_q4t41")
+next_state_path = NodePath("../cooldown")
+
+[sub_resource type="Animation" id="Animation_ggajj"]
+resource_name = "attack"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RottenCanon:rotation")
+tracks/0/interp = 3
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 0.594603, 1),
+"update": 0,
+"values": [0.0, 0.0, -0.240855, 0.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("weapon_manager")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"shoot"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("weapon_manager/attack:state_exit")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Array[ExtResource("5_q4t41")]([]), Array[ExtResource("5_q4t41")]([SubResource("Resource_mxwj6"), SubResource("Resource_awhru")])]
+}
+
+[sub_resource type="Resource" id="Resource_e40ho"]
+script = ExtResource("3_hcpre")
+compatible_triggers = Array[int]([1, 2])
+next_state_path = NodePath("../attack")
+
+[sub_resource type="Animation" id="Animation_os130"]
+resource_name = "cooldown"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon_manager/cooldown:state_exit")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Array[ExtResource("5_q4t41")]([]), Array[ExtResource("5_q4t41")]([SubResource("Resource_e40ho")])]
+}
+
+[sub_resource type="Resource" id="Resource_av1gd"]
+script = ExtResource("5_q4t41")
+next_state_path = NodePath("../cooldown")
+
+[sub_resource type="Animation" id="Animation_g8f3q"]
+resource_name = "reload"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RottenCanon:rotation")
+tracks/0/interp = 4
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.8, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -1.5708, -1.5708, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("weapon_manager/reload:state_exit")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Array[ExtResource("5_q4t41")]([]), Array[ExtResource("5_q4t41")]([SubResource("Resource_av1gd")])]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ko0d0"]
+_data = {
+"RESET": SubResource("Animation_fdaj3"),
+"attack": SubResource("Animation_ggajj"),
+"cooldown": SubResource("Animation_os130"),
+"reload": SubResource("Animation_g8f3q")
+}
+
+[node name="ranged_weapon" instance=ExtResource("1_efvor")]
+
+[node name="weapon_manager" parent="." index="0" node_paths=PackedStringArray("animation_player")]
+random_spread = 0.016
+ammo = 10
+projectile = ExtResource("2_562ga")
+attack_force = 80.0
+recoil = 15.0
+animation_player = NodePath("../AnimationPlayer")
+
+[node name="Barrel" type="RayCast2D" parent="barrel_holder" index="0"]
+target_position = Vector2(15, 0)
+script = ExtResource("6_5em23")
+
+[node name="RottenCanon" type="Sprite2D" parent="." index="2"]
+texture = ExtResource("7_muhxd")
+offset = Vector2(4, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+reset_on_save = false
+libraries = {
+"": SubResource("AnimationLibrary_ko0d0")
+}
+
+[node name="AimNode" type="Node2D" parent="." index="4"]
+script = ExtResource("8_hemfy")

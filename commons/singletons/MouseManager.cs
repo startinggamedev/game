@@ -13,7 +13,7 @@ public partial class MouseManager : Node2D
 	{
 		for(int i = CrossHairSprites.Count - 1;i >= 0;i-- )
 		{
-			CrossHairSprites[i].GlobalPosition = MyMath.DeltaLerp(CrossHairSprites[i].GlobalPosition,GetGlobalMousePosition(),CrossHairSmoothing[i],delta);
+			CrossHairSprites[i].GlobalPosition = MyMath.DeltaLerp(GetGlobalMousePosition(),CrossHairSprites[i].GlobalPosition,CrossHairSmoothing[i],delta * 60.0);
 			CrossHairSprites[i].Rotation += CrossHairRotationSec[i] * (float)delta;
 		}   
 	}

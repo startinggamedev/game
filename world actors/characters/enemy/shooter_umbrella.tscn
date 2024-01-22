@@ -8,8 +8,8 @@
 [ext_resource type="Script" path="res://world actors/physics/bodies/components/velocity/linear velocity/linear_velocity.gd" id="4_7fjjq"]
 [ext_resource type="Script" path="res://commons/triggers/triggers/automatic_triggerer.gd" id="6_imw20"]
 [ext_resource type="PackedScene" uid="uid://u46x63gfopwt" path="res://world actors/characters/components/set uppers/weapon_setupper.tscn" id="7_q4xe1"]
-[ext_resource type="PackedScene" uid="uid://i5b37lnp4pp8" path="res://world actors/items/weapons/ranged/light_cannon.tscn" id="8_oy6u2"]
-[ext_resource type="Script" path="res://world actors/items/weapons/components/aim_types/spin_aim.gd" id="9_m53s8"]
+[ext_resource type="PackedScene" uid="uid://i5b37lnp4pp8" path="res://world actors/mechanics/weapons/ranged/light_cannon.tscn" id="8_oy6u2"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/aim_types/spin_aim.gd" id="9_m53s8"]
 
 [sub_resource type="Resource" id="Resource_s73vb"]
 script = ExtResource("2_fcl66")

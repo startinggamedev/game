@@ -2,11 +2,12 @@ using Godot;
 using System;
 using System.Dynamic;
 [GlobalClass]
-public  partial class State : Resource{
+public  partial class State : StateMachineComponent{
 	[Export]
 	public Godot.Collections.Array<StateThread> Threads;
 
 	public State NextState{get; protected set;}
+
 	public  virtual void Enter(){}
 	public  virtual void Exit(){}
 	public  virtual void Process(double delta){}

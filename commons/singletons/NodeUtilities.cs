@@ -53,5 +53,16 @@ public partial class NodeUtilities : GodotObject{
         }
         return null;
     }
+    public static Node AddChildTo(List<Node> PossibleParents,Node Child)
+    {
+        for(int i = PossibleParents.Count -1;i >= 0;i--){
+            Node CurrentParent = PossibleParents[i];
+            if (IsInstanceValid(CurrentParent)){
+                CurrentParent.AddChild(Child);
+                return CurrentParent;
+            }
+        }
+        return null;
+    }
 
 }

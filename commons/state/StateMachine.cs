@@ -1,7 +1,7 @@
 using Godot;
 using System;
 [GlobalClass]
-public partial class StateMachine : Node,IStateRunner
+public partial class StateMachine : Node
 {
 	[Export]
 	State RootState;
@@ -10,7 +10,7 @@ public partial class StateMachine : Node,IStateRunner
 	{
 		foreach(var CurrentThread in RootState.Threads)
 		{
-			CurrentThread.Enter();
+			CurrentThread.Enter(this);
 		}
 	}
 	public void Process(double delta)

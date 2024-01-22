@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cnotxler5hmy4"]
+
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/WeaponAnimationPlayer.cs" id="1_oktd4"]
+
+[sub_resource type="Animation" id="Animation_gnybu"]
+resource_name = "new_animation"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_875ch"]
+_data = {
+"new_animation": SubResource("Animation_gnybu")
+}
+
+[node name="WeaponRoot" type="Node2D"]
+z_index = 200
+z_as_relative = false
+
+[node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_875ch")
+}
+script = ExtResource("1_oktd4")
+
+[node name="WeaponManager" type="Node" parent="."]

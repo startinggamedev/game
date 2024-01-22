@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Character : PhysicsBody
+public partial class Character : PhysicsBody,IUsesType
 {
 	#region exportedvariables
 	[Export]
@@ -15,6 +15,12 @@ public partial class Character : PhysicsBody
 	[Export]
 	DamageDetector MyDamagedetector;
 	#endregion
+
+	#region Interface implementations
+	public void SetUpType(int Type){}
+	public int GetMyType(){return (int)Type;}
+	#endregion
+
 	#region processes
 	public override void _Ready()
 	{

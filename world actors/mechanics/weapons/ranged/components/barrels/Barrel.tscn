@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://jpww1ojv1lym"]
+
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/ranged/components/barrels/Barrel.cs" id="1_tg5k4"]
+
+[node name="Barrel" type="RayCast2D"]
+target_position = Vector2(50, 0)
+script = ExtResource("1_tg5k4")

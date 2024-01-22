@@ -9,8 +9,8 @@
 [ext_resource type="Script" path="res://world actors/characters/enemy/components/states/blade fan/idle.gd" id="3_opqcp"]
 [ext_resource type="Texture2D" uid="uid://jq2v8vaanr50" path="res://visuals/sprites/blade fan blade lid.png" id="4_drt7a"]
 [ext_resource type="Script" path="res://world actors/characters/enemy/bladefan_dead.gd" id="7_4temq"]
-[ext_resource type="PackedScene" uid="uid://dxdnbov5cc7ir" path="res://world actors/characters/components/mechanics/rockets/fan_rocket.tscn" id="7_u53l6"]
-[ext_resource type="Script" path="res://world actors/items/weapons/components/aim_types/group_aim.gd" id="10_44omw"]
+[ext_resource type="PackedScene" uid="uid://dxdnbov5cc7ir" path="res://world actors/mechanics/rockets/fan_rocket.tscn" id="7_u53l6"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/aim_types/group_aim.gd" id="10_44omw"]
 [ext_resource type="Script" path="res://commons/triggers/triggers/automatic_triggerer.gd" id="10_hsgnt"]
 
 [sub_resource type="Resource" id="Resource_7ew0a"]

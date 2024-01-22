@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://bi7c5jkpnp3sx"]
+[gd_scene load_steps=6 format=3 uid="uid://bi7c5jkpnp3sx"]
 
 [ext_resource type="PackedScene" uid="uid://owxrflpec5hl" path="res://world actors/physics/bodies/PhysicsBody.tscn" id="1_xhh6b"]
 [ext_resource type="PackedScene" uid="uid://t8r76aia8n7a" path="res://world actors/characters/components/health/health manager/HealthManager.tscn" id="2_6k43g"]
+[ext_resource type="Script" path="res://world actors/characters/Character.cs" id="2_vntto"]
 [ext_resource type="PackedScene" uid="uid://ct6f538hmeg4w" path="res://world actors/characters/components/health/damage detector/DamageDetector.tscn" id="3_phcis"]
 [ext_resource type="Script" path="res://world actors/physics/bodies/DuplicateCollisionObjects.cs" id="4_ys2q4"]
 
 [node name="Character" instance=ExtResource("1_xhh6b")]
+script = ExtResource("2_vntto")
+Type = 0
 
 [node name="HealthManager" parent="." index="3" node_paths=PackedStringArray("MyDamageDetector", "MyCharacter") instance=ExtResource("2_6k43g")]
 MyDamageDetector = NodePath("../DamageDetector")

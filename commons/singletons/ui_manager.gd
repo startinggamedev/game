@@ -1,3 +1,3 @@
 class_name UiManager
 extends CanvasLayer
-@onready var mouse = $mouse
+@onready var mouse_manager = $MouseManager

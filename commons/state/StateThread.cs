@@ -2,37 +2,24 @@ using Godot;
 using System;
 using System.Runtime.Serialization;
 [GlobalClass]
-public partial class StateThread : Resource{
+public partial class StateThread : StateMachineComponent{
 	[Export]
-	Godot.Collections.Array<State> States;
+	private Godot.Collections.Array<State> States;
 	[Export]
 	private State StartingState;
 	private State CurrentState;
-	#region methods
-	private int GetStateIndex(State StateToCheck)
+
+
+    #region methods
+	protected virtual void OnStateChange(State CurrentState){}
+    private int GetStateIndex(State StateToCheck)
 	{
 		int StateIndex = States.IndexOf(StateToCheck);
 		if (StateIndex == -1){GD.PushError("State is not part of 'States' Array");}
 		return StateIndex;
 	}
-	public void Enter()
-	{
-		CurrentState = States[GetStateIndex(StartingState)];
-		CurrentState.Enter();
-		foreach (var CurrentThread in CurrentState.Threads)
-			{
-				CurrentThread.Enter();
-			}
-	}
-	public void Exit()
-	{
-		CurrentState.Exit();
-		foreach (var CurrentThread in CurrentState.Threads)
-		{
-			CurrentThread.Exit();
-		}
-	}
-	private void ChangeStateTo(State NextState)
+	
+	private void ChangeCurrentStateTo(State NextState)
 	{
 		if (NextState is null){return;}
 		CurrentState.Exit();
@@ -40,22 +27,41 @@ public partial class StateThread : Resource{
 		{
 			CurrentThread.Exit();
 		}
+		ChangeCurrentState(NextState);
+	}
+	private void ChangeCurrentState(State NextState)
+	{
 		CurrentState = States[GetStateIndex(NextState)];
+		CurrentState.MyStateMachine = MyStateMachine;
 		CurrentState.Enter();
+		OnStateChange(CurrentState);
 		foreach(var CurrentThread in CurrentState.Threads)
 		{
-			CurrentThread.Enter();
+			CurrentThread.Enter(MyStateMachine);
 		}
 	}
-	public void Process(double delta)
 
+	public virtual void Process(double delta)
 	{    
-		ChangeStateTo(CurrentState.NextState);
+		ChangeCurrentStateTo(CurrentState.NextState);
 		StateTools.RunStateProcess(delta,CurrentState);
 	}
-	public void Physics(double delta)
+	public virtual void Physics(double delta)
 	{
 		StateTools.RunStatePhysics(delta,CurrentState);
 	}
-	#endregion
+	public virtual void Enter(StateMachine CurrentStateMachine)
+	{
+		MyStateMachine = CurrentStateMachine;
+		ChangeCurrentState(StartingState);
+	}
+	public virtual void Exit()
+	{
+		CurrentState.Exit();
+		foreach (var CurrentThread in CurrentState.Threads)
+		{
+			CurrentThread.Exit();
+		}
+	}
+    #endregion
 }

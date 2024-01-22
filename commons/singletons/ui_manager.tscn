@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4wvw5ktwhkeg"]
+[gd_scene load_steps=6 format=3 uid="uid://b4wvw5ktwhkeg"]
 
 [ext_resource type="Script" path="res://commons/singletons/ui_manager.gd" id="1_q50p7"]
 [ext_resource type="Script" path="res://commons/singletons/MouseManager.cs" id="2_xjkcw"]
 [ext_resource type="Texture2D" uid="uid://tdmasry2xxly" path="res://visuals/sprites/cross hair center.png" id="3_07cog"]
+[ext_resource type="Texture2D" uid="uid://fhuvgeyvrym8" path="res://visuals/sprites/cross hair edge.png" id="4_2j54x"]
 [ext_resource type="Texture2D" uid="uid://c0io7ax25q37s" path="res://visuals/sprites/outer crosshair edge.png" id="5_w6mvv"]
 
 [node name="ui" type="CanvasLayer"]
@@ -10,10 +11,15 @@ script = ExtResource("1_q50p7")
 
 [node name="MouseManager" type="Node2D" parent="." node_paths=PackedStringArray("CrossHairSprites")]
 script = ExtResource("2_xjkcw")
-CrossHairSprites = []
+CrossHairSprites = [NodePath("crosshair"), NodePath("CrossHairedge"), NodePath("OuterCrosshairEdge")]
+CrossHairSmoothing = Array[float]([0.0, 0.8, 0.9])
+CrossHairRotationSec = Array[float]([0.0, 3.142, 4.712])
+
+[node name="OuterCrosshairEdge" type="Sprite2D" parent="MouseManager"]
+texture = ExtResource("4_2j54x")
+
+[node name="CrossHairedge" type="Sprite2D" parent="MouseManager"]
+texture = ExtResource("5_w6mvv")
 
 [node name="crosshair" type="Sprite2D" parent="MouseManager"]
 texture = ExtResource("3_07cog")
-
-[node name="OuterCrosshairEdge" type="Sprite2D" parent="MouseManager"]
-texture = ExtResource("5_w6mvv")
