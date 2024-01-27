@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dl68foi2muccs"]
+
+[ext_resource type="Script" path="res://world actors/mechanics/rockets/Rocket.cs" id="1_vnln0"]
+
+[node name="Rocket" type="Node2D" node_paths=PackedStringArray("MyAnimationPlayer")]
+z_index = 1
+script = ExtResource("1_vnln0")
+MyAnimationPlayer = NodePath("AnimationPlayer")
+metadata/_access_modifiers = {
+"Acceleration": 1,
+"MyAnimationPlayer": 1,
+"RocketParticles": 1,
+"TargetMomentumMagnitude": 1
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

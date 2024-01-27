@@ -42,6 +42,16 @@ public partial class NodeUtilities : GodotObject{
         }
         return NearestNode;
     }
+    public static Godot.Collections.Array<T> GetChildren<[MustBeVariant]T>(Node Parent) where T : Node
+    {
+        var Children = Parent.GetChildren();
+        Godot.Collections.Array<T> Output = new Godot.Collections.Array<T>();
+        foreach(T CurrentChild in Children)
+        {
+            Output.Add(CurrentChild);
+        }
+        return Output;
+    }
     public static Node AddChildTo(Godot.Collections.Array<Node> PossibleParents,Node Child)
     {
         for(int i = PossibleParents.Count -1;i >= 0;i--){

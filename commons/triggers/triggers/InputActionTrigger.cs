@@ -9,17 +9,6 @@ public partial class InputActionTrigger : Trigger
     StringName TriggerInputAction;
     public override void UpdateTriggerState(double delta)
     {
-        if(Input.IsActionJustPressed(TriggerInputAction))
-        {
-            CurrentTriggerState = (int)Gl.TriggerStates.PRESSED;
-        }
-        else if(Input.IsActionPressed(TriggerInputAction))
-        {
-            CurrentTriggerState = (int)Gl.TriggerStates.HELD;
-        }
-        else
-        {
-            CurrentTriggerState = (int)Gl.TriggerStates.RELEASED;
-        }
+       SetTrigger(Input.IsActionPressed(TriggerInputAction),delta);
     }
 }

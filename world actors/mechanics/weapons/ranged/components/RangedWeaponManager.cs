@@ -4,19 +4,39 @@ using System.Collections.Generic;
 public partial class RangedWeaponManager : WeaponManager
 {
 	[Export]
-	public int ammo{get;private set;} = 1;
+	int _Ammo;
+	[Export]
+	public int MaxAmmo {get;private set;} = -1;
 	[Export]
 	Godot.Collections.Array<Barrel> MyBarrels;
 	[Export]
 	PackedScene Projectile;
 
-	public bool HasaAmmo()
+	
+	public int Ammo
 	{
-		return ammo > 0;
+		set
+		{
+			if(MaxAmmo == -1){MaxAmmo = _Ammo;}
+			_Ammo = Math.Clamp(value,0,MaxAmmo);
+		}
+		get
+		{
+			return _Ammo;
+		}
+	}
+	public bool HasAmmo()
+	{
+		return Ammo > 0;
+	}
+	public int RechargeAmmo(float RechargeRate = 1f)
+	{
+		Ammo = (int)Math.Round(MaxAmmo * RechargeRate);
+		return Ammo;
 	}
 	public override void Attack(float Recoil)
 	{
-	   ammo -= 1;
+	   Ammo -= 1;
 	   foreach (var CurrentBarrel in MyBarrels){
 		if (CurrentBarrel.IsActive)
 		{

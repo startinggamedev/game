@@ -10,4 +10,4 @@ func _process(delta):
 	rotation += aim_offset
 	if flip_y: 
 		get_parent().scale.y = sign(cos(get_parent().rotation))
-	get_parent().global_rotation = Gl.delta_angle_lerp(rotation,get_parent().global_rotation,aim_smoothing,delta*60.)
+	#get_parent().global_rotation = Gl.delta_angle_lerp(rotation,get_parent().global_rotation,aim_smoothing,delta*60.)

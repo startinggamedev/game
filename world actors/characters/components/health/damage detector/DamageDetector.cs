@@ -39,7 +39,8 @@ public partial class DamageDetector : Area2D,IUsesType
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public Godot.Collections.Array<DamageDetector> GetDamagers(){
 		Godot.Collections.Array<DamageDetector> Damagers = new Godot.Collections.Array<DamageDetector>(){};
-		foreach (DamageDetector CurrentDamageDetector in GetDamagers())
+		var  CollidingAreas = GetOverlappingAreas();
+		foreach (DamageDetector CurrentDamageDetector in CollidingAreas)
 		{
 			if (DamageType.CanDamage(MyDamageType,CurrentDamageDetector.MyDamageType))
 			{

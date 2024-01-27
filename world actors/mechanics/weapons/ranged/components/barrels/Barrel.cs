@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+[GlobalClass]
 public partial class Barrel : RayCast2D
 {
 	[Export]
@@ -30,7 +31,8 @@ public partial class Barrel : RayCast2D
 		float BarrelOffset = (i - CenterBarrel) * BarrelSpacing;
 		Projectile.GlobalPosition = GlobalPosition +TargetPosition.Rotated(GlobalRotation + BarrelOffset);
 		Projectile.ApplyImpulse(Impulse.Rotated(GlobalRotation + BarrelOffset +(float)GD.RandRange(-Spread,Spread)));
-		NodeUtilities.AddChildTo(new List<Node>(){Globals.CharacterHolder,this},Projectile);
+		AddSibling(Projectile);
+		//NodeUtilities.AddChildTo(new List<Node>(){Globals.CharacterHolder,this},Projectile);
 		} 
 	}
 }

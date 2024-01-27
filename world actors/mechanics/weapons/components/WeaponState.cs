@@ -1,16 +1,30 @@
 using Godot;
 using System;
 using System.Runtime.InteropServices;
+using System.Threading;
 [GlobalClass]
-public partial class WeaponState: AnimationState{
-	public WeaponStateExitCondition MyWeaponStateExitCondition;
-	public override void Process(double delta)
+public partial class WeaponState: State
+{
+	[Export]
+	Godot.Collections.Array<WeaponStateExitCondition> StateExitConditions;
+
+	WeaponManager MyWeaponManager;
+	protected override void ProtectedProcess(double delta)
 	{
-	if (MyStateMachine is not WeaponManager){
-		GD.PushError("Weapon state should belong to a Weapon Manager");
-		return;
+		foreach (WeaponStateExitCondition CurrentCondition in StateExitConditions)
+		{
+			double AnimationProgress = 0.0;
+			if (MyStateThread is AnimationStateThread)
+			{
+			AnimationPlayer MyAnimationPlayer = ((AnimationStateThread)MyStateThread).ThreadAnimationPlayer;
+			AnimationProgress = MyAnimationPlayer.CurrentAnimationPosition / MyAnimationPlayer.CurrentAnimationLength;
+			}
+			if (AnimationProgress >= CurrentCondition.Start && AnimationProgress <= CurrentCondition.End)
+			{
+				CurrentCondition.MyState = this;
+				NextState = CurrentCondition.ExitCondition(MyWeaponManager) ?? NextState;
+			}
 		}
-		GD.Print(MyWeaponStateExitCondition);
-		NextState = MyWeaponStateExitCondition.ExitCondition((WeaponManager)MyStateMachine);
+		base.Process(delta);
 	}
 }

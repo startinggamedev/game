@@ -8,11 +8,6 @@ public partial class AutomaticTrigger : Trigger
     float TriggerSpacingSec = 0f;
     [Export]
     float TriggerLengthSec = 0f;
-    [Export]
-    Gl.TriggerStates SpacedTriggerType = Gl.TriggerStates.PRESSED;
-    [Export]
-    Gl.TriggerStates DefaultTriggerType = Gl.TriggerStates.RELEASED;
-
     
     private float TriggerSpacingTimer = 0f;
     private float TriggerLengthTimer = 0f;
@@ -20,7 +15,7 @@ public partial class AutomaticTrigger : Trigger
     {
         if (TriggerSpacingTimer <= 0f) 
         {
-            CurrentTriggerState = (int)SpacedTriggerType;
+            SetTrigger(true,delta);
             if (TriggerLengthTimer >= 0)
             {
             TriggerLengthTimer -= (float)delta;
@@ -34,7 +29,7 @@ public partial class AutomaticTrigger : Trigger
         }
         else
         {
-            CurrentTriggerState = (int)DefaultTriggerType;
+            SetTrigger(false,delta);
             TriggerLengthTimer -= (float)delta;
         }
     }

@@ -38,4 +38,8 @@ public class MyMath{
     {
         return Vector.Normalized() * (float)Math.Clamp(Vector.Length(),MinLength,MaxLength);
     }
+    public static double WrapRadian(double Radian)
+    {
+        return Radian % MathF.Tau;
+    }
 }

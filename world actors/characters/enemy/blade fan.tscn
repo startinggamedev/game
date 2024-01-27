@@ -1,46 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://cshpt8v7xqkga"]
+[gd_scene load_steps=11 format=3 uid="uid://cshpt8v7xqkga"]
 
 [ext_resource type="PackedScene" uid="uid://cob38cql5hxyl" path="res://world actors/characters/enemy/enemy.tscn" id="1_eimu1"]
-[ext_resource type="Script" path="res://world actors/characters/enemy/components/states/blade fan/moving.gd" id="2_1smfl"]
-[ext_resource type="Script" path="res://world actors/characters/components/health/damage/damage_respects.gd" id="2_d6cyu"]
 [ext_resource type="Texture2D" uid="uid://d1gk1x8v61g8y" path="res://visuals/sprites/bladefan wire.png" id="2_y7hvn"]
 [ext_resource type="Texture2D" uid="uid://bxvwgmoudua73" path="res://visuals/sprites/bladefanblade.png" id="3_en8rn"]
-[ext_resource type="Script" path="res://world actors/characters/components/health/damage/damage.gd" id="3_g8bel"]
-[ext_resource type="Script" path="res://world actors/characters/enemy/components/states/blade fan/idle.gd" id="3_opqcp"]
 [ext_resource type="Texture2D" uid="uid://jq2v8vaanr50" path="res://visuals/sprites/blade fan blade lid.png" id="4_drt7a"]
-[ext_resource type="Script" path="res://world actors/characters/enemy/bladefan_dead.gd" id="7_4temq"]
-[ext_resource type="PackedScene" uid="uid://dxdnbov5cc7ir" path="res://world actors/mechanics/rockets/fan_rocket.tscn" id="7_u53l6"]
-[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/aim_types/group_aim.gd" id="10_44omw"]
-[ext_resource type="Script" path="res://commons/triggers/triggers/automatic_triggerer.gd" id="10_hsgnt"]
-
-[sub_resource type="Resource" id="Resource_7ew0a"]
-script = ExtResource("2_d6cyu")
-defense = true
-iframe = true
-invincibility = true
-
-[sub_resource type="Resource" id="Resource_4hc3s"]
-script = ExtResource("3_g8bel")
-respect = SubResource("Resource_7ew0a")
-damage = 1.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_vqc8d"]
-radius = 15.0333
-
-[sub_resource type="Resource" id="Resource_nc2pj"]
-script = ExtResource("10_44omw")
-target_group = "player"
-
-[sub_resource type="Resource" id="Resource_728et"]
-script = ExtResource("10_hsgnt")
-trigger_type = 1
-trigger_spacing_sec = 0.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_dpmfk"]
-radius = 20.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_8i5h8"]
-radius = 17.0
+[ext_resource type="PackedScene" uid="uid://dxdnbov5cc7ir" path="res://world actors/mechanics/rockets/FanRocket.tscn" id="7_u53l6"]
 
 [sub_resource type="Animation" id="Animation_u8o3p"]
 length = 0.001
@@ -130,7 +94,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.8),
 "transitions": PackedFloat32Array(2, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(108, 12)]
+"values": [Vector2(0, 0), Vector2(108, 120)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -140,7 +104,7 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0.2, 1),
-"transitions": PackedFloat32Array(1.51572, 1),
+"transitions": PackedFloat32Array(0.366022, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(-50, 30)]
 }
@@ -166,7 +130,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 0.482968),
 "update": 0,
-"values": [0.0, 12.5664]
+"values": [0.0, 4.46804]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -248,35 +212,8 @@ _data = {
 }
 
 [node name="blade_fan" instance=ExtResource("1_eimu1")]
-bounciness = 0.5
 
-[node name="damage_detector" parent="." index="0"]
-damage = SubResource("Resource_4hc3s")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="damage_detector" index="0"]
-visible = false
-shape = SubResource("CircleShape2D_vqc8d")
-
-[node name="health_manager" parent="." index="1"]
-hp = 12.0
-iframe_length_sec = 0.01
-
-[node name="behaviour_manager" parent="." index="2" node_paths=PackedStringArray("animation_player", "current_state")]
-animation_player = NodePath("../animation_player")
-current_state = NodePath("moving")
-
-[node name="dead" parent="behaviour_manager" index="0"]
-script = ExtResource("7_4temq")
-
-[node name="moving" type="Node" parent="behaviour_manager" index="1"]
-script = ExtResource("2_1smfl")
-moving_time_sec = 4.0
-
-[node name="idle" type="Node" parent="behaviour_manager" index="2"]
-script = ExtResource("3_opqcp")
-idle_time_sec = 0.9
-
-[node name="BladefanWire" type="Sprite2D" parent="." index="3"]
+[node name="BladefanWire" type="Sprite2D" parent="." index="0"]
 z_index = 1
 texture = ExtResource("2_y7hvn")
 
@@ -284,24 +221,12 @@ texture = ExtResource("2_y7hvn")
 z_index = -1
 texture = ExtResource("3_en8rn")
 
-[node name="fan_rocket" parent="BladefanWire" index="1" node_paths=PackedStringArray("body") instance=ExtResource("7_u53l6")]
-body = NodePath("../..")
-aim_type = SubResource("Resource_nc2pj")
-triggerer = SubResource("Resource_728et")
+[node name="fan_rocket" parent="BladefanWire" index="1" instance=ExtResource("7_u53l6")]
 
-[node name="BladeFanBladeLid" type="Sprite2D" parent="." index="4"]
+[node name="BladeFanBladeLid" type="Sprite2D" parent="." index="1"]
 texture = ExtResource("4_drt7a")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="5"]
-visible = false
-shape = SubResource("CircleShape2D_dpmfk")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="repulsion_field" index="0"]
-visible = false
-position = Vector2(-1, 0)
-shape = SubResource("CircleShape2D_8i5h8")
-
-[node name="animation_player" type="AnimationPlayer" parent="." index="7"]
+[node name="animation_player" type="AnimationPlayer" parent="." index="2"]
 libraries = {
 "": SubResource("AnimationLibrary_0dycs")
 }

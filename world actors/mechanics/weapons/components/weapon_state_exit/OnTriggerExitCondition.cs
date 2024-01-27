@@ -4,17 +4,16 @@ using System;
 public partial class OnTriggerExitCondition : WeaponStateExitCondition
 {
     [Export]
-    Godot.Collections.Array<Gl.TriggerStates> ExitTriggers;
+    float MinTriggerTime;
+    [Export]
+    float MaxTriggerTime;
     public override State ExitCondition(WeaponManager MyWeaponManager)
     {
-        if(ExitTriggers.Contains((Gl.TriggerStates)MyWeaponManager.MyTrigger.CurrentTriggerState))
+        if((MyWeaponManager.MyTrigger.TimeTriggered) > MinTriggerTime && (MyWeaponManager.MyTrigger.TimeTriggered) < MaxTriggerTime )
         {
-            return NextState;
+            return GetNextState();
         }
-        else
-        {
-            return null;
-        }
+        else{return null;}
     }
 
 }

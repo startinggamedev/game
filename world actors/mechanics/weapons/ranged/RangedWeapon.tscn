@@ -1,8 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://bmjimljr4yt8r"]
+[gd_scene load_steps=8 format=3 uid="uid://bmjimljr4yt8r"]
 
 [ext_resource type="PackedScene" uid="uid://cnotxler5hmy4" path="res://world actors/mechanics/weapons/Weapon.tscn" id="1_aq8t5"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/ranged/RangedWeaponRoot.cs" id="2_ox5gh"]
 [ext_resource type="Script" path="res://world actors/mechanics/weapons/ranged/components/RangedWeaponManager.cs" id="2_pms6s"]
+[ext_resource type="Script" path="res://world actors/mechanics/aiming/AimResource.cs" id="3_cpp6w"]
 [ext_resource type="Script" path="res://commons/triggers/triggers/AutomaticTrigger.cs" id="3_xjmlq"]
+
+[sub_resource type="Resource" id="Resource_nsrip"]
+script = ExtResource("3_cpp6w")
+AimSmoothing = 0.0
+AimOffset = 0.0
 
 [sub_resource type="Resource" id="Resource_w3343"]
 script = ExtResource("3_xjmlq")
@@ -12,7 +19,8 @@ SpacedTriggerType = 1
 DefaultTriggerType = 0
 
 [node name="RangedWeapon" instance=ExtResource("1_aq8t5")]
-script = null
+script = ExtResource("2_ox5gh")
+MyAimResource = SubResource("Resource_nsrip")
 
 [node name="WeaponManager" parent="." index="1" node_paths=PackedStringArray("MyBarrels", "MyWeaponRoot", "MyBarrels")]
 script = ExtResource("2_pms6s")

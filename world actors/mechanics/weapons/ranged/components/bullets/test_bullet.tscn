@@ -1,23 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://6jmye0mnnuex"]
+[gd_scene load_steps=2 format=3 uid="uid://6jmye0mnnuex"]
 
 [ext_resource type="PackedScene" uid="uid://bc0qxxq5kxtt4" path="res://world actors/mechanics/weapons/ranged/components/bullets/bullet.tscn" id="1_5bino"]
-[ext_resource type="Script" path="res://world actors/characters/components/health/health manager/dead.gd" id="2_im6sp"]
 
 [node name="bullet" instance=ExtResource("1_5bino")]
 
-[node name="damage_detector" parent="." index="0"]
-damage_bump = Array[Resource("res://world actors/characters/components/health/damage_bump_types/damage_bump_type.gd")]([])
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="damage_detector" index="0"]
-polygon = PackedVector2Array(-12, -8, 12, 0, -12, 8)
-
-[node name="dead" parent="behaviour_manager" index="0"]
-script = ExtResource("2_im6sp")
-
-[node name="collision_area" type="CollisionPolygon2D" parent="." index="3"]
-self_modulate = Color(0, 0, 1, 1)
-position = Vector2(-2, 6)
-
-[node name="Polygon2D" type="Polygon2D" parent="." index="5"]
+[node name="Polygon2D" type="Polygon2D" parent="." index="3"]
 position = Vector2(4, 0)
 polygon = PackedVector2Array(-16, -8, -16, 8, -12, 8, -4, 4, 0, 8, 4, 8, 8, 0, 4, -8, 0, -8, -4, -4, -12, -8, -16, -8)

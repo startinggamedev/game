@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxdnbov5cc7ir"]
+
+[ext_resource type="PackedScene" uid="uid://dl68foi2muccs" path="res://world actors/mechanics/rockets/Rocket.tscn" id="1_stk3j"]
+[ext_resource type="Texture2D" uid="uid://bsnmij84ghjp4" path="res://visuals/sprites/blade fan rocket.png" id="2_ytkmm"]
+[ext_resource type="PackedScene" uid="uid://bf7w30b5f7me5" path="res://visuals/particles/rocket_smoke.tscn" id="3_vmue7"]
+
+[node name="fan_rocket" instance=ExtResource("1_stk3j")]
+Acceleration = 100.0
+TargetMomentumMagnitude = 600.0
+
+[node name="BladeFanRocket" type="Sprite2D" parent="." index="0"]
+z_index = 1
+position = Vector2(-20, 0)
+texture = ExtResource("2_ytkmm")
+centered = false
+offset = Vector2(-9, -6)
+
+[node name="RocketSmoke" parent="BladeFanRocket" index="0" instance=ExtResource("3_vmue7")]
+z_index = -1
+rotation = 3.14159
+scale = Vector2(1, -1)

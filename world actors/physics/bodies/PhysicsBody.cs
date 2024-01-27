@@ -49,7 +49,7 @@ public partial class PhysicsBody : CharacterBody2D{
 	}
 
 	public void Debugdelta(double delta){
-		GD.Print(GlobalPosition.DistanceTo(PrevGlobalPosition) / delta);
+		GD.Print("Velocity seconds: " + (GlobalPosition.DistanceTo(PrevGlobalPosition) / delta).ToString());
 	}
 
 	private void ApplyFriction(List<float> FrictionCollection,double Delta)
@@ -60,7 +60,6 @@ public partial class PhysicsBody : CharacterBody2D{
 			Friction = Mathf.Lerp(Friction,FrictionMultiplier,FrictionCollection[i]);
 		}
 		Momentum = MyMath.DeltaLerp(Momentum,Godot.Vector2.Zero,Friction,Delta);
-		GD.Print(MyMath.DeltaLerp(0f,1f,Friction,Delta));
 	}
 	private void CalculateMomentum(double delta)
 	{
