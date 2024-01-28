@@ -44,6 +44,7 @@ public partial class StateThread : Node
 		if(NextStateQueue is not null)
 		{
 			NextStateQueue();
+			NextStateQueue = null;
 		}
 		CurrentState.Process(delta);
 	}

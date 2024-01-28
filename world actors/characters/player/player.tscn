@@ -1,16 +1,13 @@
-[gd_scene load_steps=20 format=3 uid="uid://bysemkqf7a0n"]
+[gd_scene load_steps=13 format=3 uid="uid://bysemkqf7a0n"]
 
 [ext_resource type="PackedScene" uid="uid://bi7c5jkpnp3sx" path="res://world actors/characters/Character.tscn" id="1_8rkyw"]
 [ext_resource type="Texture2D" uid="uid://cmpva2w5l2ifp" path="res://visuals/sprites/balloon.png" id="4_8t2c0"]
 [ext_resource type="PackedScene" uid="uid://dxdnbov5cc7ir" path="res://world actors/mechanics/rockets/FanRocket.tscn" id="8_iej8v"]
 [ext_resource type="Script" path="res://world actors/physics/objects/pendulum.gd" id="8_uieam"]
 [ext_resource type="PackedScene" uid="uid://b1y26j6o6bqd1" path="res://visuals/chains/chain.tscn" id="9_cjup7"]
-[ext_resource type="Script" path="res://script_templates/State/state_template.gd" id="9_nv3kd"]
 [ext_resource type="Script" path="res://world actors/mechanics/aiming/AimTypes/MouseAimType.cs" id="9_o2ata"]
 [ext_resource type="Script" path="res://world actors/mechanics/aiming/AimResource.cs" id="10_a413c"]
 [ext_resource type="Texture2D" uid="uid://dq71dt2x17p3w" path="res://visuals/sprites/rope.png" id="10_dwhqi"]
-[ext_resource type="Script" path="res://commons/state_system/StateThread.cs" id="10_kin3v"]
-[ext_resource type="Script" path="res://commons/state_system/State.cs" id="11_omhc0"]
 [ext_resource type="PackedScene" uid="uid://ct2pmyl2gjme" path="res://world actors/physics/objects/pendulum.tscn" id="12_c2ry5"]
 [ext_resource type="Texture2D" uid="uid://tff8jhqfddpx" path="res://visuals/sprites/balloon_basket.png" id="13_gvqgu"]
 
@@ -22,22 +19,6 @@ script = ExtResource("10_a413c")
 MyAimType = SubResource("Resource_pbhnd")
 AimSmoothing = 0.0
 AimOffset = 0.0
-
-[sub_resource type="Resource" id="Resource_0c7ud"]
-script = ExtResource("9_nv3kd")
-
-[sub_resource type="Resource" id="Resource_j8j73"]
-script = ExtResource("11_omhc0")
-Threads = null
-
-[sub_resource type="Resource" id="Resource_qvb4y"]
-script = ExtResource("10_kin3v")
-States = Array[Object]([SubResource("Resource_j8j73")])
-
-[sub_resource type="Resource" id="Resource_idiac"]
-script = ExtResource("11_omhc0")
-Threads = Array[Object]([SubResource("Resource_qvb4y")])
-MyStateReference = SubResource("Resource_0c7ud")
 
 [node name="player" groups=["player"] instance=ExtResource("1_8rkyw")]
 
@@ -96,6 +77,3 @@ MyBody = NodePath("..")
 metadata/_access_modifiers = {
 "MyAnimationPlayer": 1
 }
-
-[node name="CharacterStateMachine" parent="." index="9"]
-RootState = SubResource("Resource_idiac")

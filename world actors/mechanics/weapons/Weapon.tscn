@@ -1,6 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://cnotxler5hmy4"]
+[gd_scene load_steps=8 format=3 uid="uid://cnotxler5hmy4"]
 
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/WeaponRoot.cs" id="1_nt67w"]
 [ext_resource type="Script" path="res://world actors/mechanics/weapons/components/WeaponAnimationPlayer.cs" id="1_oktd4"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/WeaponManager.cs" id="2_40vi1"]
+[ext_resource type="Script" path="res://commons/state_system/State.cs" id="2_uxhg7"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/WeaponStateThread.cs" id="4_0ieym"]
 
 [sub_resource type="Animation" id="Animation_gnybu"]
 resource_name = "new_animation"
@@ -13,6 +17,7 @@ _data = {
 [node name="WeaponRoot" type="Node2D"]
 z_index = 200
 z_as_relative = false
+script = ExtResource("1_nt67w")
 
 [node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -20,4 +25,14 @@ libraries = {
 }
 script = ExtResource("1_oktd4")
 
-[node name="WeaponManager" type="Node" parent="."]
+[node name="WeaponManager" type="Node" parent="." node_paths=PackedStringArray("MyBarrels", "StartingState")]
+script = ExtResource("2_40vi1")
+MyBarrels = []
+StartingState = NodePath("NormalBehaviour")
+
+[node name="NormalBehaviour" type="Node" parent="WeaponManager"]
+script = ExtResource("2_uxhg7")
+
+[node name="WeaponThread" type="Node" parent="WeaponManager/NormalBehaviour" node_paths=PackedStringArray("ThreadAnimationPlayer")]
+script = ExtResource("4_0ieym")
+ThreadAnimationPlayer = NodePath("../../../WeaponAnimationPlayer")

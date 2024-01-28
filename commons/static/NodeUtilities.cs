@@ -54,9 +54,10 @@ public partial class NodeUtilities : GodotObject{
     }
     public static Node AddChildTo(Godot.Collections.Array<Node> PossibleParents,Node Child)
     {
-        for(int i = PossibleParents.Count -1;i >= 0;i--){
-            Node CurrentParent = PossibleParents[i];
+        foreach (var CurrentParent in PossibleParents)
+        {
             if (IsInstanceValid(CurrentParent)){
+                GD.Print("a");
                 CurrentParent.AddChild(Child);
                 return CurrentParent;
             }
@@ -65,14 +66,7 @@ public partial class NodeUtilities : GodotObject{
     }
     public static Node AddChildTo(List<Node> PossibleParents,Node Child)
     {
-        for(int i = PossibleParents.Count -1;i >= 0;i--){
-            Node CurrentParent = PossibleParents[i];
-            if (IsInstanceValid(CurrentParent)){
-                CurrentParent.AddChild(Child);
-                return CurrentParent;
-            }
-        }
-        return null;
+        return AddChildTo(new Godot.Collections.Array<Node>(PossibleParents),Child);
     }
 
 }

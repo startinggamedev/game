@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ca1rnsb0xeoa3"
+path="res://.godot/imported/light_cannon.ase-850d688f49c5b569485eb7a484253fbe.res"
+
+[deps]
+
+source_file="res://visuals/sprites/light_cannon.ase"
+dest_files=["res://.godot/imported/light_cannon.ase-850d688f49c5b569485eb7a484253fbe.res"]
+
+[params]
+

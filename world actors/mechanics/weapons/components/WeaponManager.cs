@@ -1,14 +1,18 @@
 using Godot;
 using System;
 using System.Text.RegularExpressions;
-public abstract partial class WeaponManager : StateMachine
+public partial class WeaponManager : StateMachine
 {
 	[Export]
 	public Trigger MyTrigger = new AutomaticTrigger();
 	[Export]
-	protected WeaponRoot MyWeaponRoot;
-	[Export]
 	Godot.Collections.Array<Barrel> MyBarrels;
+	protected WeaponRoot MyWeaponRoot;
+	public override void _Ready()
+	{
+		MyWeaponRoot = GetOwner<WeaponRoot>();
+		base._Ready();
+	}
 	public virtual void Attack(float Recoil)
 	{
 		MyWeaponRoot.MyCharacter?.ApplyImpulse(Recoil * Godot.Vector2.FromAngle(MyWeaponRoot.GlobalRotation));

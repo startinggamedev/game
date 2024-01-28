@@ -1,7 +1,7 @@
 using Godot;
 using System;
-
-public abstract partial class State : Node
+[GlobalClass]
+public partial class State : Node
 {
 	public StateThread MyStateThread{get;private set;}
 	public Godot.Collections.Array<StateThread> MyThreads;
@@ -39,6 +39,7 @@ public abstract partial class State : Node
 	public  void Exit()
 	{
 		ProtectedExit();
+		NextState = null;
 		foreach (var Thread in MyThreads)
 		{
 			Thread.Exit();

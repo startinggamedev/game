@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b32ea6ahdk0uw"
-path="res://.godot/imported/light cannon.png-dcaba52127f11791c4ec4ad9df8c52c5.ctex"
+uid="uid://ds3s0t13ek500"
+path="res://.godot/imported/light_cannon.png-99bc303a5baacf774928810df2870392.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://visuals/sprites/light cannon.png"
-dest_files=["res://.godot/imported/light cannon.png-dcaba52127f11791c4ec4ad9df8c52c5.ctex"]
+source_file="res://visuals/sprites/light_cannon.png"
+dest_files=["res://.godot/imported/light_cannon.png-99bc303a5baacf774928810df2870392.ctex"]
 
 [params]
 

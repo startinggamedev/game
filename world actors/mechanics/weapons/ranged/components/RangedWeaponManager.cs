@@ -36,8 +36,8 @@ public partial class RangedWeaponManager : WeaponManager
 	}
 	public override void Attack(float Recoil)
 	{
-	   Ammo -= 1;
-	   foreach (var CurrentBarrel in MyBarrels){
+		Ammo -= 1;
+		foreach (var CurrentBarrel in MyBarrels){
 		if (CurrentBarrel.IsActive)
 		{
 			CurrentBarrel.ShootProjectile(Projectile);

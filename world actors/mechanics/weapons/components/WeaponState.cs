@@ -11,6 +11,12 @@ public partial class WeaponState: State
 	WeaponManager MyWeaponManager;
 	protected override void ProtectedProcess(double delta)
 	{
+		if(MyStateThread is not WeaponStateThread)
+		{
+			GD.PushError("WeaponState should be direct child of weapon state thread, which it isnt, so it wont work properly");
+			return;
+		}
+		WeaponStateThread MyWeaponThread = (WeaponStateThread)MyStateThread; 
 		foreach (WeaponStateExitCondition CurrentCondition in StateExitConditions)
 		{
 			double AnimationProgress = 0.0;
@@ -22,9 +28,9 @@ public partial class WeaponState: State
 			if (AnimationProgress >= CurrentCondition.Start && AnimationProgress <= CurrentCondition.End)
 			{
 				CurrentCondition.MyState = this;
-				NextState = CurrentCondition.ExitCondition(MyWeaponManager) ?? NextState;
+				NextState = CurrentCondition.ExitCondition(MyWeaponThread.MyWeaponManager) ?? NextState;
 			}
 		}
-		base.Process(delta);
+		base.ProtectedProcess(delta);
 	}
 }

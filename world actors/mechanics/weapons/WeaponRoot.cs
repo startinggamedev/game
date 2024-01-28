@@ -1,6 +1,6 @@
 using Godot;
 using System;
-public abstract partial class WeaponRoot : Node2D,IUsesType
+public partial class WeaponRoot : Node2D,IUsesType
 {
 	[Export]
 	public Character MyCharacter;

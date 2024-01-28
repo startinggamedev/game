@@ -1,20 +1,48 @@
-[gd_scene load_steps=13 format=3 uid="uid://cd21jqqf2xl8b"]
+[gd_scene load_steps=16 format=3 uid="uid://cd21jqqf2xl8b"]
 
 [ext_resource type="PackedScene" uid="uid://bmjimljr4yt8r" path="res://world actors/mechanics/weapons/ranged/RangedWeapon.tscn" id="1_ahwkq"]
-[ext_resource type="Script" path="res://world actors/mechanics/aiming/AimTypes/SpinAimType.cs" id="2_fvnah"]
+[ext_resource type="Script" path="res://world actors/mechanics/aiming/AimTypes/MouseAimType.cs" id="2_fgm7i"]
 [ext_resource type="Texture2D" uid="uid://defowvd1ogcam" path="res://visuals/sprites/cat.jpeg" id="2_m8bna"]
-[ext_resource type="Script" path="res://world actors/mechanics/aiming/AimResource.cs" id="2_np2mw"]
+[ext_resource type="Script" path="res://world actors/mechanics/aiming/AimResource.cs" id="3_h5jcx"]
+[ext_resource type="PackedScene" uid="uid://6jmye0mnnuex" path="res://world actors/mechanics/weapons/ranged/components/bullets/test_bullet.tscn" id="4_acnkd"]
+[ext_resource type="Script" path="res://commons/triggers/triggers/InputActionTrigger.cs" id="7_0hriu"]
 [ext_resource type="Script" path="res://world actors/mechanics/weapons/ranged/components/barrels/Barrel.cs" id="7_b8myd"]
 
-[sub_resource type="Resource" id="Resource_ma0xv"]
-script = ExtResource("2_fvnah")
-SpinRadiansSec = 6.0
+[sub_resource type="Resource" id="Resource_wvqt3"]
+script = ExtResource("2_fgm7i")
 
-[sub_resource type="Resource" id="Resource_n5kck"]
-script = ExtResource("2_np2mw")
-MyAimType = SubResource("Resource_ma0xv")
-AimSmoothing = 0.9995
+[sub_resource type="Resource" id="Resource_nb8vf"]
+script = ExtResource("3_h5jcx")
+MyAimType = SubResource("Resource_wvqt3")
+AimSmoothing = 0.0
 AimOffset = 0.0
+
+[sub_resource type="Animation" id="Animation_s3nlf"]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cat:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(179, 165), Vector2(227, 137)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cat:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.785398, 0.0]
+}
 
 [sub_resource type="Animation" id="Animation_w7xk0"]
 length = 0.001
@@ -44,7 +72,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_31mj1"]
-resource_name = "recharge"
+resource_name = "Recharge"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -84,35 +112,8 @@ tracks/2/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_s3nlf"]
-resource_name = "reload"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Cat:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(179, 165), Vector2(227, 137)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Cat:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-0.785398, 0.0]
-}
-
 [sub_resource type="Animation" id="Animation_kin8g"]
-resource_name = "shoot"
+resource_name = "Shoot"
 length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -143,15 +144,19 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_50o1t"]
 _data = {
+"Idle": SubResource("Animation_s3nlf"),
 "RESET": SubResource("Animation_w7xk0"),
-"recharge": SubResource("Animation_31mj1"),
-"reload": SubResource("Animation_s3nlf"),
-"shoot": SubResource("Animation_kin8g")
+"Recharge": SubResource("Animation_31mj1"),
+"Shoot": SubResource("Animation_kin8g")
 }
+
+[sub_resource type="Resource" id="Resource_rhxts"]
+script = ExtResource("7_0hriu")
+TriggerInputAction = &"Attack"
 
 [node name="RangedWeapon" instance=ExtResource("1_ahwkq")]
 position = Vector2(186, 64)
-MyAimResource = SubResource("Resource_n5kck")
+MyAimResource = SubResource("Resource_nb8vf")
 
 [node name="WeaponAnimationPlayer" parent="." index="0"]
 libraries = {
@@ -163,9 +168,21 @@ position = Vector2(216, 128)
 texture = ExtResource("2_m8bna")
 
 [node name="Barrel" type="RayCast2D" parent="." index="2"]
-position = Vector2(18, -25)
-target_position = Vector2(192, 0)
+position = Vector2(-56, 53)
+rotation = -1.60221
+target_position = Vector2(2, 220)
 script = ExtResource("7_b8myd")
 Impulse = Vector2(6000, 0)
-Barrels = 5
-BarrelSpacing = 0.262
+Spread = 0.39
+Barrels = 10
+BarrelSpacing = 0.09
+
+[node name="WeaponManager" parent="." index="3" node_paths=PackedStringArray("MyBarrels", "MyBarrels")]
+_Ammo = 5
+MyBarrels = [NodePath("../Barrel")]
+Projectile = ExtResource("4_acnkd")
+MyTrigger = SubResource("Resource_rhxts")
+MyBarrels = [NodePath("../Barrel")]
+
+[node name="WeaponThread" parent="WeaponManager/NormalBehaviour" index="0" node_paths=PackedStringArray("MyWeaponManager")]
+MyWeaponManager = NodePath("../..")

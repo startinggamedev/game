@@ -1,30 +1,82 @@
-[gd_scene load_steps=8 format=3 uid="uid://bmjimljr4yt8r"]
+[gd_scene load_steps=17 format=3 uid="uid://bmjimljr4yt8r"]
 
 [ext_resource type="PackedScene" uid="uid://cnotxler5hmy4" path="res://world actors/mechanics/weapons/Weapon.tscn" id="1_aq8t5"]
 [ext_resource type="Script" path="res://world actors/mechanics/weapons/ranged/RangedWeaponRoot.cs" id="2_ox5gh"]
 [ext_resource type="Script" path="res://world actors/mechanics/weapons/ranged/components/RangedWeaponManager.cs" id="2_pms6s"]
 [ext_resource type="Script" path="res://world actors/mechanics/aiming/AimResource.cs" id="3_cpp6w"]
 [ext_resource type="Script" path="res://commons/triggers/triggers/AutomaticTrigger.cs" id="3_xjmlq"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/WeaponState.cs" id="6_704o6"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/weapon_state_exit/OnTriggerExitCondition.cs" id="7_5v8my"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/weapon_state_exit/OnAmmoDepletionExitCondition.cs" id="9_3sdrq"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/components/weapon_state_exit/WeaponStateExitCondition.cs" id="9_hn4gf"]
 
 [sub_resource type="Resource" id="Resource_nsrip"]
 script = ExtResource("3_cpp6w")
 AimSmoothing = 0.0
 AimOffset = 0.0
 
-[sub_resource type="Resource" id="Resource_w3343"]
+[sub_resource type="Resource" id="Resource_bo1g4"]
 script = ExtResource("3_xjmlq")
 TriggerSpacingSec = 0.0
 TriggerLengthSec = 0.0
-SpacedTriggerType = 1
-DefaultTriggerType = 0
+
+[sub_resource type="Resource" id="Resource_p6fdf"]
+script = ExtResource("7_5v8my")
+MinTriggerTime = 0.0
+MaxTriggerTime = inf
+NextState = NodePath("../Shoot")
+Start = 1.0
+End = 1.0
+
+[sub_resource type="Resource" id="Resource_ba28w"]
+script = ExtResource("9_hn4gf")
+NextState = NodePath("../Idle")
+Start = 1.0
+End = 1.0
+
+[sub_resource type="Resource" id="Resource_fmpy7"]
+script = ExtResource("9_hn4gf")
+NextState = NodePath("../Idle")
+Start = 1.0
+End = 1.0
+
+[sub_resource type="Resource" id="Resource_qfhe1"]
+script = ExtResource("7_5v8my")
+MinTriggerTime = 0.0
+MaxTriggerTime = inf
+NextState = NodePath(".")
+Start = 1.0
+End = 1.0
+
+[sub_resource type="Resource" id="Resource_xry1e"]
+script = ExtResource("9_3sdrq")
+NextState = NodePath("../Recharge")
+Start = 1.0
+End = 1.0
 
 [node name="RangedWeapon" instance=ExtResource("1_aq8t5")]
 script = ExtResource("2_ox5gh")
 MyAimResource = SubResource("Resource_nsrip")
 
-[node name="WeaponManager" parent="." index="1" node_paths=PackedStringArray("MyBarrels", "MyWeaponRoot", "MyBarrels")]
+[node name="WeaponManager" parent="." index="1"]
 script = ExtResource("2_pms6s")
-MyBarrels = []
-MyTrigger = SubResource("Resource_w3343")
-MyWeaponRoot = NodePath("..")
-MyBarrels = []
+_Ammo = 0
+MaxAmmo = -1
+Projectile = null
+MyTrigger = SubResource("Resource_bo1g4")
+
+[node name="WeaponThread" parent="WeaponManager/NormalBehaviour" index="0" node_paths=PackedStringArray("TestMyWeaponManager", "StartingState")]
+TestMyWeaponManager = NodePath("../..")
+StartingState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="WeaponManager/NormalBehaviour/WeaponThread" index="0"]
+script = ExtResource("6_704o6")
+StateExitConditions = Array[Object]([SubResource("Resource_p6fdf")])
+
+[node name="Recharge" type="Node" parent="WeaponManager/NormalBehaviour/WeaponThread" index="1"]
+script = ExtResource("6_704o6")
+StateExitConditions = Array[Object]([SubResource("Resource_ba28w")])
+
+[node name="Shoot" type="Node" parent="WeaponManager/NormalBehaviour/WeaponThread" index="2"]
+script = ExtResource("6_704o6")
+StateExitConditions = Array[Object]([SubResource("Resource_fmpy7"), SubResource("Resource_qfhe1"), SubResource("Resource_xry1e")])

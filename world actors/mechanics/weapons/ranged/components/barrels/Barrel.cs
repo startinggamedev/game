@@ -31,8 +31,7 @@ public partial class Barrel : RayCast2D
 		float BarrelOffset = (i - CenterBarrel) * BarrelSpacing;
 		Projectile.GlobalPosition = GlobalPosition +TargetPosition.Rotated(GlobalRotation + BarrelOffset);
 		Projectile.ApplyImpulse(Impulse.Rotated(GlobalRotation + BarrelOffset +(float)GD.RandRange(-Spread,Spread)));
-		AddSibling(Projectile);
-		//NodeUtilities.AddChildTo(new List<Node>(){Globals.CharacterHolder,this},Projectile);
+		NodeUtilities.AddChildTo(new List<Node>(){Globals.CharacterHolder,GetParent(),this},Projectile);
 		} 
 	}
 }
