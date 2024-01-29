@@ -6,8 +6,9 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_13t1s"]
 shader = ExtResource("2_rqsn5")
 
-[node name="room" type="Node2D"]
+[node name="room" type="Node2D" node_paths=PackedStringArray("CharacterViewPort")]
 script = ExtResource("1_34x76")
+CharacterViewPort = NodePath("SubViewportContainer/world_viewport")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 material = SubResource("ShaderMaterial_13t1s")

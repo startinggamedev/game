@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cshpt8v7xqkga"]
+[gd_scene load_steps=15 format=3 uid="uid://cshpt8v7xqkga"]
 
 [ext_resource type="PackedScene" uid="uid://cob38cql5hxyl" path="res://world actors/characters/enemy/enemy.tscn" id="1_eimu1"]
 [ext_resource type="Texture2D" uid="uid://d1gk1x8v61g8y" path="res://visuals/sprites/bladefan wire.png" id="2_y7hvn"]
@@ -7,12 +7,17 @@
 [ext_resource type="Script" path="res://world actors/characters/enemy/blade fan/BladeFanNormalBehaviour.cs" id="6_542lf"]
 [ext_resource type="Script" path="res://commons/triggers/triggers/AutomaticTrigger.cs" id="7_a7pc1"]
 [ext_resource type="PackedScene" uid="uid://dxdnbov5cc7ir" path="res://world actors/mechanics/rockets/FanRocket.tscn" id="7_u53l6"]
+[ext_resource type="Script" path="res://world actors/mechanics/aiming/AimTypes/SpinAimType.cs" id="8_6psir"]
 
-[sub_resource type="Resource" id="Resource_th6ju"]
+[sub_resource type="Resource" id="Resource_hue7w"]
 script = ExtResource("7_a7pc1")
-TriggerSpacingSec = 0.8
-TriggerLengthSec = 5.0
+TriggerSpacingSec = 0.3
+TriggerLengthSec = 2.0
 CanBeTriggered = true
+
+[sub_resource type="Resource" id="Resource_lhbuk"]
+script = ExtResource("8_6psir")
+SpinRadiansSec = 12.566
 
 [sub_resource type="Animation" id="Animation_w4b7q"]
 resource_name = "Idle"
@@ -40,33 +45,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, 1), Vector2(0, -1)]
-}
-
-[sub_resource type="Animation" id="Animation_vnthb"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("BladefanWire/Bladefanblade:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("BladefanWire:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_chwnl"]
@@ -98,6 +76,33 @@ tracks/1/keys = {
 "values": [Vector2(1, 1), Vector2(-1, -1), Vector2(0, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_vnthb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BladefanWire/Bladefanblade:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BladefanWire:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hspqy"]
 _data = {
 "Idle": SubResource("Animation_w4b7q"),
@@ -106,6 +111,7 @@ _data = {
 }
 
 [node name="BladeFan" instance=ExtResource("1_eimu1")]
+Weight = 0.5
 metadata/_access_modifiers = {
 "MyDamagedetector": 2
 }
@@ -124,6 +130,15 @@ MyBody = NodePath("../..")
 [node name="BladeFanBladeLid" type="Sprite2D" parent="." index="1"]
 texture = ExtResource("4_drt7a")
 
+[node name="BodyBoundingBox" parent="BodyBoundingBoxDuplicator" index="0"]
+polygon = PackedVector2Array(28, 0, 0, 28, -28, 0, 0, -28)
+
+[node name="DamageDetector" parent="." index="6"]
+DamageBumpTypes = [null]
+
+[node name="CharacterBoundingBox" parent="CharacterBoundingBoxDuplicator" index="0"]
+polygon = PackedVector2Array(18, 0, 0, 18, -18, 0, 0, -18)
+
 [node name="BehaviourManager" parent="." index="8" node_paths=PackedStringArray("StartingState")]
 StartingState = NodePath("NormalBehaviour")
 
@@ -131,7 +146,8 @@ StartingState = NodePath("NormalBehaviour")
 script = ExtResource("6_542lf")
 FanAnimationPlayer = NodePath("../../AnimationPlayer")
 FanRocket = NodePath("../../BladefanWire/FanRocket")
-FanTrigger = SubResource("Resource_th6ju")
+FanTrigger = SubResource("Resource_hue7w")
+RocketAimType = SubResource("Resource_lhbuk")
 
 [node name="AnimationPlayer" parent="." index="9"]
 libraries = {

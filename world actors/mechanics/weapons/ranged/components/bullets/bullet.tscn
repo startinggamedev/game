@@ -1,7 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://bc0qxxq5kxtt4"]
+[gd_scene load_steps=6 format=3 uid="uid://bc0qxxq5kxtt4"]
 
 [ext_resource type="PackedScene" uid="uid://bi7c5jkpnp3sx" path="res://world actors/characters/Character.tscn" id="1_55lax"]
+[ext_resource type="Script" path="res://world actors/characters/components/health/damage_bump_types/VelocityBumpType.cs" id="2_6e12g"]
+[ext_resource type="Script" path="res://world actors/characters/components/health/damage/DamageRes.cs" id="3_mch8h"]
+
+[sub_resource type="Resource" id="Resource_eer80"]
+script = ExtResource("2_6e12g")
+BumpMultiplier = 1.0
+
+[sub_resource type="Resource" id="Resource_ncdpm"]
+script = ExtResource("3_mch8h")
+RespectIframe = true
+RespectDefense = true
+Damage = 5.0
 
 [node name="bullet" groups=["bullet"] instance=ExtResource("1_55lax")]
 z_index = 100
 FrictionMultiplier = 0.0
+
+[node name="DamageDetector" parent="." index="4"]
+DamageBumpTypes = [SubResource("Resource_eer80")]
+MyDamageRes = SubResource("Resource_ncdpm")

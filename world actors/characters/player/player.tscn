@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bysemkqf7a0n"]
+[gd_scene load_steps=19 format=3 uid="uid://bysemkqf7a0n"]
 
 [ext_resource type="PackedScene" uid="uid://bi7c5jkpnp3sx" path="res://world actors/characters/Character.tscn" id="1_8rkyw"]
 [ext_resource type="Texture2D" uid="uid://cmpva2w5l2ifp" path="res://visuals/sprites/balloon.png" id="4_8t2c0"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dq71dt2x17p3w" path="res://visuals/sprites/rope.png" id="10_dwhqi"]
 [ext_resource type="PackedScene" uid="uid://ct2pmyl2gjme" path="res://world actors/physics/objects/pendulum.tscn" id="12_c2ry5"]
 [ext_resource type="Texture2D" uid="uid://tff8jhqfddpx" path="res://visuals/sprites/balloon_basket.png" id="13_gvqgu"]
+[ext_resource type="Script" path="res://world actors/mechanics/aiming/AimTypes/MouseAimType.cs" id="13_r6fln"]
 
 [sub_resource type="Resource" id="Resource_ugyfi"]
 script = ExtResource("5_pap0p")
@@ -25,6 +26,16 @@ script = ExtResource("6_k8qt6")
 script = ExtResource("10_a413c")
 MyAimType = SubResource("Resource_d73m6")
 AimSmoothing = 0.845
+AimOffset = 0.0
+CanAim = true
+
+[sub_resource type="Resource" id="Resource_0gelp"]
+script = ExtResource("13_r6fln")
+
+[sub_resource type="Resource" id="Resource_jpuoy"]
+script = ExtResource("10_a413c")
+MyAimType = SubResource("Resource_0gelp")
+AimSmoothing = 0.0
 AimOffset = 0.0
 CanAim = true
 
@@ -91,5 +102,11 @@ ChainTexture = ExtResource("10_dwhqi")
 ChainEnd = NodePath("../../../Pendulum2/balloon/rope_end")
 
 [node name="LightCannon" parent="Pendulum/BalloonBasket" index="4" node_paths=PackedStringArray("MyCharacter") instance=ExtResource("8_mp4mm")]
-position = Vector2(0, -1)
+MyAimResource = SubResource("Resource_jpuoy")
 MyCharacter = NodePath("../../..")
+metadata/_access_modifiers = {
+"MyAimResource": 2
+}
+
+[node name="BehaviourManager" parent="." index="8" node_paths=PackedStringArray("StartingState")]
+StartingState = NodePath("NormalBehaviour")

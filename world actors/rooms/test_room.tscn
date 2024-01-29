@@ -7,8 +7,9 @@
 [node name="room" instance=ExtResource("1_82q2r")]
 
 [node name="SubViewportContainer" parent="." index="0"]
+offset_top = -8.0
 offset_right = 960.0
-offset_bottom = 540.0
+offset_bottom = 532.0
 
 [node name="world_viewport" parent="SubViewportContainer" index="0"]
 snap_2d_vertices_to_pixel = true

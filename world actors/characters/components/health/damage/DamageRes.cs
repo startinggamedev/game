@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using System.Dynamic;
-
+[GlobalClass]
 public partial class DamageRes : Resource
 {
     [Export]

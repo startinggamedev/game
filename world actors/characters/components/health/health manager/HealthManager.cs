@@ -86,6 +86,11 @@ public partial class HealthManager : Node
 		{
 			foreach (DamageDetector Currentdamager in MyDamageDetector.GetDamagers())
 			{
+				foreach (var BumpType in Currentdamager.DamageBumpTypes)
+				{
+					MyCharacter.ApplyImpulse(BumpType.BumpFunction(delta,Currentdamager.MyCharacter,MyCharacter));
+				}
+				
 				TakeDamage(Currentdamager.MyDamageRes);
 			}
 		}

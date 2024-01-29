@@ -100,6 +100,12 @@ Acceleration = 600.0
 TargetMomentumMagnitude = 6000.0
 MyAimResource = SubResource("Resource_a4ej4")
 RocketParticles = NodePath("Sprite2D/RocketSmoke")
+metadata/_access_modifiers = {
+"Acceleration": 1,
+"MyAnimationPlayer": 2,
+"RocketParticles": 1,
+"TargetMomentumMagnitude": 1
+}
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="0"]
 texture = ExtResource("3_dsw7x")

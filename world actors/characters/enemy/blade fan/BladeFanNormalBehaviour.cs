@@ -10,6 +10,8 @@ public partial class BladeFanNormalBehaviour : State
 	 Rocket FanRocket;
 	[Export]
 	Trigger FanTrigger;
+	[Export]
+	AimType RocketAimType;
 	protected override void ProtectedProcess(double delta)
 	{
 		FanTrigger.UpdateTriggerState(delta);
@@ -29,6 +31,7 @@ public partial class BladeFanNormalBehaviour : State
 	}
 	protected override void ProtectedEnter()
 	{
+		FanRocket.MyAimResource.MyAimType = RocketAimType;
 		base.ProtectedEnter();
 	}
 	protected override void ProtectedExit()

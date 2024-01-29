@@ -8,6 +8,7 @@ script = ExtResource("1_vnln0")
 MyAnimationPlayer = NodePath("AnimationPlayer")
 metadata/_access_modifiers = {
 "Acceleration": 1,
+"MyAimResource": 1,
 "MyAnimationPlayer": 2,
 "RocketParticles": 1,
 "TargetMomentumMagnitude": 1
