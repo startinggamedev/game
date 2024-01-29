@@ -7,9 +7,9 @@ public partial class Rocket : Node2D
 	[Export]
 	float TargetMomentumMagnitude;
 	[Export]
-	Trigger MyTrigger = new AutomaticTrigger();
+	public Trigger MyTrigger = new AutomaticTrigger();
 	[Export]
-	private AimResource MyAimResource = new AimResource();
+	public AimResource MyAimResource = new AimResource();
 	[Export]
 	PhysicsBody MyBody;
 	[Export]
@@ -20,18 +20,18 @@ public partial class Rocket : Node2D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		MyTrigger.UpdateTriggerState(delta);
 		MyAimResource.AimProcess(this,delta);
-		RocketParticles.Amount = (int)(Math.Sqrt(TargetMomentumMagnitude) * 10f);
-		RocketParticles.Amount = (int)(Acceleration * 0.005);
+		RocketParticles.Amount = (int)(Math.Sqrt(TargetMomentumMagnitude) * 5f);
 		if (MyTrigger.TimeTriggered > 0f)
 		{
 			MyBody.ApplyForce(MyMath.VectorFromAngleAndMagnitude(GlobalRotation,TargetMomentumMagnitude),
 			Acceleration);
-			MyAnimationPlayer.Play("moving");
+			MyAnimationPlayer.Play("Moving");
 		}
 		else
 		{
-			MyAnimationPlayer.Play("idle");
+			MyAnimationPlayer.Play("Idle");
 		}
 		RocketParticles.Emitting = MyTrigger.TimeTriggered > 0f;
 		base._PhysicsProcess(delta);

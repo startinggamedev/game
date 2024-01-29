@@ -1,0 +1,139 @@
+[gd_scene load_steps=13 format=3 uid="uid://cshpt8v7xqkga"]
+
+[ext_resource type="PackedScene" uid="uid://cob38cql5hxyl" path="res://world actors/characters/enemy/enemy.tscn" id="1_eimu1"]
+[ext_resource type="Texture2D" uid="uid://d1gk1x8v61g8y" path="res://visuals/sprites/bladefan wire.png" id="2_y7hvn"]
+[ext_resource type="Texture2D" uid="uid://bxvwgmoudua73" path="res://visuals/sprites/bladefanblade.png" id="3_en8rn"]
+[ext_resource type="Texture2D" uid="uid://jq2v8vaanr50" path="res://visuals/sprites/blade fan blade lid.png" id="4_drt7a"]
+[ext_resource type="Script" path="res://world actors/characters/enemy/blade fan/BladeFanNormalBehaviour.cs" id="6_542lf"]
+[ext_resource type="Script" path="res://commons/triggers/triggers/AutomaticTrigger.cs" id="7_a7pc1"]
+[ext_resource type="PackedScene" uid="uid://dxdnbov5cc7ir" path="res://world actors/mechanics/rockets/FanRocket.tscn" id="7_u53l6"]
+
+[sub_resource type="Resource" id="Resource_th6ju"]
+script = ExtResource("7_a7pc1")
+TriggerSpacingSec = 0.8
+TriggerLengthSec = 5.0
+CanBeTriggered = true
+
+[sub_resource type="Animation" id="Animation_w4b7q"]
+resource_name = "Idle"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BladefanWire/Bladefanblade:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(2.07053, 1),
+"update": 0,
+"values": [0.0, 12.5664]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BladefanWire:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 1), Vector2(0, -1)]
+}
+
+[sub_resource type="Animation" id="Animation_vnthb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BladefanWire/Bladefanblade:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BladefanWire:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_chwnl"]
+resource_name = "Moving"
+length = 0.45
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BladefanWire/Bladefanblade:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BladefanWire:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(-1, -1), Vector2(0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hspqy"]
+_data = {
+"Idle": SubResource("Animation_w4b7q"),
+"Moving": SubResource("Animation_chwnl"),
+"RESET": SubResource("Animation_vnthb")
+}
+
+[node name="BladeFan" instance=ExtResource("1_eimu1")]
+metadata/_access_modifiers = {
+"MyDamagedetector": 2
+}
+
+[node name="BladefanWire" type="Sprite2D" parent="." index="0"]
+z_index = 1
+texture = ExtResource("2_y7hvn")
+
+[node name="Bladefanblade" type="Sprite2D" parent="BladefanWire" index="0"]
+z_index = -1
+texture = ExtResource("3_en8rn")
+
+[node name="FanRocket" parent="BladefanWire" index="1" node_paths=PackedStringArray("MyBody") instance=ExtResource("7_u53l6")]
+MyBody = NodePath("../..")
+
+[node name="BladeFanBladeLid" type="Sprite2D" parent="." index="1"]
+texture = ExtResource("4_drt7a")
+
+[node name="BehaviourManager" parent="." index="8" node_paths=PackedStringArray("StartingState")]
+StartingState = NodePath("NormalBehaviour")
+
+[node name="NormalBehaviour" parent="BehaviourManager" index="0" node_paths=PackedStringArray("FanAnimationPlayer", "FanRocket")]
+script = ExtResource("6_542lf")
+FanAnimationPlayer = NodePath("../../AnimationPlayer")
+FanRocket = NodePath("../../BladefanWire/FanRocket")
+FanTrigger = SubResource("Resource_th6ju")
+
+[node name="AnimationPlayer" parent="." index="9"]
+libraries = {
+"": SubResource("AnimationLibrary_hspqy")
+}

@@ -6,7 +6,7 @@ using System.Threading;
 public partial class WeaponState: State
 {
 	[Export]
-	Godot.Collections.Array<WeaponStateExitCondition> StateExitConditions;
+	Godot.Collections.Array<WeaponStateExitCondition> StateExitConditions = new Godot.Collections.Array<WeaponStateExitCondition>();
 
 	WeaponManager MyWeaponManager;
 	protected override void ProtectedProcess(double delta)

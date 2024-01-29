@@ -1,14 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://bi7c5jkpnp3sx"]
+[gd_scene load_steps=8 format=3 uid="uid://bi7c5jkpnp3sx"]
 
 [ext_resource type="PackedScene" uid="uid://owxrflpec5hl" path="res://world actors/physics/bodies/PhysicsBody.tscn" id="1_xhh6b"]
 [ext_resource type="PackedScene" uid="uid://t8r76aia8n7a" path="res://world actors/characters/components/health/health manager/HealthManager.tscn" id="2_6k43g"]
 [ext_resource type="Script" path="res://world actors/characters/Character.cs" id="2_vntto"]
 [ext_resource type="PackedScene" uid="uid://ct6f538hmeg4w" path="res://world actors/characters/components/health/damage detector/DamageDetector.tscn" id="3_phcis"]
 [ext_resource type="Script" path="res://world actors/physics/bodies/DuplicateCollisionObjects.cs" id="4_ys2q4"]
+[ext_resource type="Script" path="res://commons/state_system/StateMachine.cs" id="6_5jlvv"]
+[ext_resource type="Script" path="res://commons/state_system/State.cs" id="7_piein"]
 
-[node name="Character" instance=ExtResource("1_xhh6b")]
+[node name="Character" node_paths=PackedStringArray("MyHealthManager", "MyDamagedetector") instance=ExtResource("1_xhh6b")]
 script = ExtResource("2_vntto")
 Type = 0
+MyHealthManager = NodePath("HealthManager")
+MyDamagedetector = NodePath("DamageDetector")
+metadata/_access_modifiers = {
+"MyDamagedetector": 2,
+"MyHealthManager": 2
+}
 
 [node name="HealthManager" parent="." index="3" node_paths=PackedStringArray("MyDamageDetector", "MyCharacter") instance=ExtResource("2_6k43g")]
 MyDamageDetector = NodePath("../DamageDetector")
@@ -24,3 +32,14 @@ BaseBoundBox = NodePath("CharacterBoundingBox")
 DerivatedCollisionObjects = [NodePath("../DamageDetector")]
 
 [node name="CharacterBoundingBox" type="CollisionPolygon2D" parent="CharacterBoundingBoxDuplicator" index="0"]
+
+[node name="BehaviourManager" type="Node" parent="." index="6"]
+script = ExtResource("6_5jlvv")
+
+[node name="NormalBehaviour" type="Node" parent="BehaviourManager" index="0"]
+script = ExtResource("7_piein")
+
+[node name="Dead" type="Node" parent="BehaviourManager" index="1"]
+script = ExtResource("7_piein")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="7"]

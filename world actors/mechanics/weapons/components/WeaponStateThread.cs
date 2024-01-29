@@ -8,8 +8,6 @@ public partial class WeaponStateThread : AnimationStateThread
 {
 	[Export]
 	public WeaponManager MyWeaponManager{get;private set;}
-	[Export]
-	public WeaponManager TestMyWeaponManager{get;private set;}
 
 	public override void _Ready()
 	{

@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://ccfwumk5t3jrt"]
+
+[ext_resource type="PackedScene" uid="uid://cob38cql5hxyl" path="res://world actors/characters/enemy/enemy.tscn" id="1_pm76d"]
+[ext_resource type="Texture2D" uid="uid://dd7osh2xhgeks" path="res://visuals/sprites/umbrella.png" id="2_0j6vw"]
+[ext_resource type="Script" path="res://world actors/physics/objects/pendulum.gd" id="2_6gjun"]
+
+[sub_resource type="Animation" id="Animation_ai5ae"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_abjx8"]
+resource_name = "dead"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xomww"]
+_data = {
+"RESET": SubResource("Animation_ai5ae"),
+"dead": SubResource("Animation_abjx8")
+}
+
+[node name="shooter_umbrella" instance=ExtResource("1_pm76d")]
+
+[node name="animation_player" type="AnimationPlayer" parent="." index="2"]
+libraries = {
+"": SubResource("AnimationLibrary_xomww")
+}
+
+[node name="Pendulum" type="Node2D" parent="." index="3"]
+script = ExtResource("2_6gjun")
+
+[node name="Umbrella" type="Sprite2D" parent="Pendulum" index="0"]
+texture = ExtResource("2_0j6vw")
+offset = Vector2(0, -18)

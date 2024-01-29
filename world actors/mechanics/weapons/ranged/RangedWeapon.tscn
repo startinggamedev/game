@@ -57,6 +57,9 @@ End = 1.0
 [node name="RangedWeapon" instance=ExtResource("1_aq8t5")]
 script = ExtResource("2_ox5gh")
 MyAimResource = SubResource("Resource_nsrip")
+metadata/_access_modifiers = {
+"MyAimResource": 2
+}
 
 [node name="WeaponManager" parent="." index="1"]
 script = ExtResource("2_pms6s")
@@ -65,18 +68,17 @@ MaxAmmo = -1
 Projectile = null
 MyTrigger = SubResource("Resource_bo1g4")
 
-[node name="WeaponThread" parent="WeaponManager/NormalBehaviour" index="0" node_paths=PackedStringArray("TestMyWeaponManager", "StartingState")]
-TestMyWeaponManager = NodePath("../..")
+[node name="WeaponThread" parent="WeaponManager/NormalBehaviour" index="0" node_paths=PackedStringArray("StartingState")]
 StartingState = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="WeaponManager/NormalBehaviour/WeaponThread" index="0"]
 script = ExtResource("6_704o6")
-StateExitConditions = Array[Object]([SubResource("Resource_p6fdf")])
+StateExitConditions = [SubResource("Resource_p6fdf")]
 
 [node name="Recharge" type="Node" parent="WeaponManager/NormalBehaviour/WeaponThread" index="1"]
 script = ExtResource("6_704o6")
-StateExitConditions = Array[Object]([SubResource("Resource_ba28w")])
+StateExitConditions = [SubResource("Resource_ba28w")]
 
 [node name="Shoot" type="Node" parent="WeaponManager/NormalBehaviour/WeaponThread" index="2"]
 script = ExtResource("6_704o6")
-StateExitConditions = Array[Object]([SubResource("Resource_fmpy7"), SubResource("Resource_qfhe1"), SubResource("Resource_xry1e")])
+StateExitConditions = [SubResource("Resource_fmpy7"), SubResource("Resource_qfhe1"), SubResource("Resource_xry1e")]

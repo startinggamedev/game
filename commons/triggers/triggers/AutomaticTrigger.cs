@@ -30,7 +30,7 @@ public partial class AutomaticTrigger : Trigger
         else
         {
             SetTrigger(false,delta);
-            TriggerLengthTimer -= (float)delta;
+            TriggerSpacingTimer -= (float)delta;
         }
     }
 

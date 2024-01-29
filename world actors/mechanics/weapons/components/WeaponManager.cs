@@ -15,7 +15,7 @@ public partial class WeaponManager : StateMachine
 	}
 	public virtual void Attack(float Recoil)
 	{
-		MyWeaponRoot.MyCharacter?.ApplyImpulse(Recoil * Godot.Vector2.FromAngle(MyWeaponRoot.GlobalRotation));
+		MyWeaponRoot.MyCharacter?.ApplyImpulse(Recoil * Godot.Vector2.FromAngle(MyWeaponRoot.GlobalRotation) * -1f);
 	}
 
 	public override void _Process(double delta)

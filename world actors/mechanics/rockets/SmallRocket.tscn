@@ -1,18 +1,118 @@
-[gd_scene load_steps=3 format=3 uid="uid://dgb8o22skpjt1"]
+[gd_scene load_steps=12 format=3 uid="uid://dgb8o22skpjt1"]
 
 [ext_resource type="PackedScene" uid="uid://dl68foi2muccs" path="res://world actors/mechanics/rockets/Rocket.tscn" id="1_76gry"]
+[ext_resource type="Script" path="res://world actors/mechanics/aiming/AimTypes/SpinAimType.cs" id="2_j3l4i"]
+[ext_resource type="PackedScene" uid="uid://bf7w30b5f7me5" path="res://visuals/particles/rocket_smoke.tscn" id="3_1d0wg"]
+[ext_resource type="Script" path="res://world actors/mechanics/aiming/AimResource.cs" id="3_4d0yt"]
 [ext_resource type="Texture2D" uid="uid://ddck0s8d8d7c1" path="res://visuals/sprites/rocket.png" id="3_dsw7x"]
 
-[node name="Rocket" instance=ExtResource("1_76gry")]
-acceleration = 400.0
+[sub_resource type="Resource" id="Resource_8ao3r"]
+script = ExtResource("2_j3l4i")
+SpinRadiansSec = 6.0
+
+[sub_resource type="Resource" id="Resource_a4ej4"]
+script = ExtResource("3_4d0yt")
+MyAimType = SubResource("Resource_8ao3r")
+AimSmoothing = 0.0
+AimOffset = 0.0
+CanAim = true
+
+[sub_resource type="Animation" id="Animation_0rrk6"]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_8uoqa"]
+resource_name = "Moving"
+length = 0.5
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 4
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0872665, -0.174533, 0.174533, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_e4b3x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xydph"]
+_data = {
+"Idle": SubResource("Animation_0rrk6"),
+"Moving": SubResource("Animation_8uoqa"),
+"RESET": SubResource("Animation_e4b3x")
+}
+
+[node name="Rocket" node_paths=PackedStringArray("RocketParticles") instance=ExtResource("1_76gry")]
+Acceleration = 600.0
+TargetMomentumMagnitude = 6000.0
+MyAimResource = SubResource("Resource_a4ej4")
+RocketParticles = NodePath("Sprite2D/RocketSmoke")
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="0"]
 texture = ExtResource("3_dsw7x")
 centered = false
 offset = Vector2(-9, -5)
 
-[node name="rocket_velocity" parent="." index="1"]
-magnitude = 300.0
-acceleration = 10.0
+[node name="RocketSmoke" parent="Sprite2D" index="0" instance=ExtResource("3_1d0wg")]
+z_index = -1
+position = Vector2(-5.99806, 0.1527)
+rotation = 3.11614
+scale = Vector2(1, -1)
 
-[node name="animation_player" type="AnimationPlayer" parent="." index="4"]
+[node name="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_xydph")
+}

@@ -1,24 +1,32 @@
-[gd_scene load_steps=13 format=3 uid="uid://bysemkqf7a0n"]
+[gd_scene load_steps=16 format=3 uid="uid://bysemkqf7a0n"]
 
 [ext_resource type="PackedScene" uid="uid://bi7c5jkpnp3sx" path="res://world actors/characters/Character.tscn" id="1_8rkyw"]
 [ext_resource type="Texture2D" uid="uid://cmpva2w5l2ifp" path="res://visuals/sprites/balloon.png" id="4_8t2c0"]
-[ext_resource type="PackedScene" uid="uid://dxdnbov5cc7ir" path="res://world actors/mechanics/rockets/FanRocket.tscn" id="8_iej8v"]
+[ext_resource type="PackedScene" uid="uid://dgb8o22skpjt1" path="res://world actors/mechanics/rockets/SmallRocket.tscn" id="4_pov8e"]
+[ext_resource type="Script" path="res://commons/triggers/triggers/InputActionTrigger.cs" id="5_pap0p"]
+[ext_resource type="Script" path="res://world actors/mechanics/aiming/AimTypes/InputAxisAimType.cs" id="6_k8qt6"]
+[ext_resource type="PackedScene" uid="uid://i5b37lnp4pp8" path="res://world actors/mechanics/weapons/ranged/LightCannon.tscn" id="8_mp4mm"]
 [ext_resource type="Script" path="res://world actors/physics/objects/pendulum.gd" id="8_uieam"]
 [ext_resource type="PackedScene" uid="uid://b1y26j6o6bqd1" path="res://visuals/chains/chain.tscn" id="9_cjup7"]
-[ext_resource type="Script" path="res://world actors/mechanics/aiming/AimTypes/MouseAimType.cs" id="9_o2ata"]
 [ext_resource type="Script" path="res://world actors/mechanics/aiming/AimResource.cs" id="10_a413c"]
 [ext_resource type="Texture2D" uid="uid://dq71dt2x17p3w" path="res://visuals/sprites/rope.png" id="10_dwhqi"]
 [ext_resource type="PackedScene" uid="uid://ct2pmyl2gjme" path="res://world actors/physics/objects/pendulum.tscn" id="12_c2ry5"]
 [ext_resource type="Texture2D" uid="uid://tff8jhqfddpx" path="res://visuals/sprites/balloon_basket.png" id="13_gvqgu"]
 
-[sub_resource type="Resource" id="Resource_pbhnd"]
-script = ExtResource("9_o2ata")
+[sub_resource type="Resource" id="Resource_ugyfi"]
+script = ExtResource("5_pap0p")
+TriggerInputAction = &"Move"
+CanBeTriggered = true
 
-[sub_resource type="Resource" id="Resource_k04el"]
+[sub_resource type="Resource" id="Resource_d73m6"]
+script = ExtResource("6_k8qt6")
+
+[sub_resource type="Resource" id="Resource_jwwy1"]
 script = ExtResource("10_a413c")
-MyAimType = SubResource("Resource_pbhnd")
-AimSmoothing = 0.0
+MyAimType = SubResource("Resource_d73m6")
+AimSmoothing = 0.845
 AimOffset = 0.0
+CanAim = true
 
 [node name="player" groups=["player"] instance=ExtResource("1_8rkyw")]
 
@@ -42,6 +50,18 @@ position = Vector2(6, 29)
 
 [node name="rope_end4" type="Node2D" parent="Pendulum2/balloon" index="3"]
 position = Vector2(10, 29)
+
+[node name="Rocket3" parent="Pendulum2" index="1" node_paths=PackedStringArray("MyBody") instance=ExtResource("4_pov8e")]
+position = Vector2(0, 30)
+MyTrigger = SubResource("Resource_ugyfi")
+MyAimResource = SubResource("Resource_jwwy1")
+MyBody = NodePath("../..")
+metadata/_access_modifiers = {
+"Acceleration": 1,
+"MyAnimationPlayer": 1,
+"RocketParticles": 1,
+"TargetMomentumMagnitude": 1
+}
 
 [node name="Pendulum" parent="." index="4" instance=ExtResource("12_c2ry5")]
 position = Vector2(0, 29)
@@ -70,10 +90,6 @@ position = Vector2(-7, -7)
 ChainTexture = ExtResource("10_dwhqi")
 ChainEnd = NodePath("../../../Pendulum2/balloon/rope_end")
 
-[node name="fan_rocket" parent="." index="8" node_paths=PackedStringArray("MyBody") instance=ExtResource("8_iej8v")]
-position = Vector2(-46, 40)
-MyAimResource = SubResource("Resource_k04el")
-MyBody = NodePath("..")
-metadata/_access_modifiers = {
-"MyAnimationPlayer": 1
-}
+[node name="LightCannon" parent="Pendulum/BalloonBasket" index="4" node_paths=PackedStringArray("MyCharacter") instance=ExtResource("8_mp4mm")]
+position = Vector2(0, -1)
+MyCharacter = NodePath("../../..")

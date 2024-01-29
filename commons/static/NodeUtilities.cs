@@ -54,11 +54,19 @@ public partial class NodeUtilities : GodotObject{
     }
     public static Node AddChildTo(Godot.Collections.Array<Node> PossibleParents,Node Child)
     {
+        var ChildGlobalPosition = Godot.Vector2.Zero;
+        if (Child is Node2D)
+        {
+            ChildGlobalPosition = ((Node2D)Child).GlobalPosition;    
+        }
         foreach (var CurrentParent in PossibleParents)
         {
             if (IsInstanceValid(CurrentParent)){
-                GD.Print("a");
                 CurrentParent.AddChild(Child);
+            if (Child is Node2D)
+            {
+                ((Node2D)Child).GlobalPosition = ChildGlobalPosition; 
+            }
                 return CurrentParent;
             }
         }
