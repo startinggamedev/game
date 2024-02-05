@@ -1,22 +1,27 @@
 using Godot;
 using System;
-public partial class DamageDetector : Area2D,IUsesType
+[GlobalClass]
+public partial class DamageDetector : Area2D,IUsesType,IUsesCharacter
 {
 	[Export]
 	HealthManager MyHealthManager;
-
-	[Export]
-	public Character MyCharacter;
 	[Export]
 	public Godot.Collections.Array<DamageBumpType> DamageBumpTypes;
 	[Export]
 	public DamageRes MyDamageRes;
+	public Character MyCharacter{get;set;}
+	[Export]
+	public CharacterGetter MyCharacterGetter {get; set;} = new CharacterGetter();
+	
+	public bool CanDamage = true;
 
 	public DamageType MyDamageType{get; private set;}
 
-	private void ToggleMonitorability(bool IsMonitorable)
+	public Action<float> DealtDamage;
+
+	public void ToggleDamagibiliy(bool can_damage)
 	{
-		Monitorable = IsMonitorable;
+		CanDamage = can_damage;
 	}
 
 	public void SetUpType(int MyType)
@@ -32,8 +37,8 @@ public partial class DamageDetector : Area2D,IUsesType
 
 	public override void _Ready()
 	{
+		MyCharacterGetter.GetCharacter(this);
 		SetUpType(GetMyType());
-		if (MyHealthManager is not null){ MyHealthManager.VitalityStatus += ToggleMonitorability;}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -42,11 +47,14 @@ public partial class DamageDetector : Area2D,IUsesType
 		var  CollidingAreas = GetOverlappingAreas();
 		foreach (DamageDetector CurrentDamageDetector in CollidingAreas)
 		{
-			if (DamageType.CanDamage(MyDamageType,CurrentDamageDetector.MyDamageType))
+			if (DamageType.CanDamage(MyDamageType,CurrentDamageDetector.MyDamageType) && CurrentDamageDetector.CanDamage)
 			{
 				Damagers.Add(CurrentDamageDetector);
 			}
 		}
 		return Damagers;
+	}
+	public Character GetCharacter(){
+		return MyCharacter;
 	}
 }

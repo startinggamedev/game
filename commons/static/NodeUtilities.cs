@@ -19,29 +19,28 @@ public partial class NodeUtilities : GodotObject{
         return false;
     }
 
-    public static Node2D GetNearestNodeInGroup(Godot.Vector2 ComparisionPosition,StringName Group)
+    public static List<Node2D> GetGroupNodesByDistance(Godot.Vector2 ComparisionPosition,StringName Group,float SearchRange = float.PositiveInfinity)
     {
         SceneTree MySceneTree = (SceneTree)Engine.GetMainLoop();
         Godot.Collections.Array<Node> GroupNodes = MySceneTree.GetNodesInGroup(Group);
-        if (GroupNodes.Count() == 0){
-            return null;
-        }
-        Node2D NearestNode = new Node2D();
-        float NearestDistance = float.PositiveInfinity;
-        for (int i = GroupNodes.Count - 1;i >= 0;i--)
+        Godot.Collections.Array<float> Distances = new Godot.Collections.Array<float>();
+        List<Node2D> NodesByDistance = new List<Node2D>();
+        GD.Print("a");
+        foreach(Node2D CurrentNode in GroupNodes)
         {
-            if (GroupNodes[i] is Node2D){
-                Node2D CurrentNode = (Node2D)GroupNodes[i];
-                float CurrentDistance = CurrentNode.GlobalPosition.DistanceTo(ComparisionPosition);
-                if (CurrentDistance < NearestDistance)
-                {
-                    NearestDistance = CurrentDistance;
-                    NearestNode = CurrentNode;
-                }
-            }
+            if(CurrentNode.GlobalPosition.DistanceTo(ComparisionPosition) <= SearchRange)
+            {
+                NodesByDistance.Add(CurrentNode);
+                Distances.Add(CurrentNode.GlobalPosition.DistanceTo(ComparisionPosition));
+            }        
         }
-        return NearestNode;
+        var DistanceArray = Distances.ToArray();
+        var NodeArray = NodesByDistance.ToArray();
+        Array.Sort(DistanceArray,NodeArray);
+        NodesByDistance = NodeArray.ToList();
+        return NodesByDistance;
     }
+
     public static Godot.Collections.Array<T> GetChildren<[MustBeVariant]T>(Node Parent) where T : Node
     {
         var Children = Parent.GetChildren();
@@ -75,6 +74,18 @@ public partial class NodeUtilities : GodotObject{
     public static Node AddChildTo(List<Node> PossibleParents,Node Child)
     {
         return AddChildTo(new Godot.Collections.Array<Node>(PossibleParents),Child);
+    }
+    public static Godot.Collections.Dictionary CastRay(CanvasItem MyCanvasItem,Godot.Vector2 From,Godot.Vector2 To,Godot.Collections.Array<Rid> Exceptions,uint CollisionMask)
+    {
+        var spaceState = MyCanvasItem.GetWorld2D().DirectSpaceState;
+        var query = PhysicsRayQueryParameters2D.Create(From,To,
+        CollisionMask,Exceptions);
+        var result = spaceState.IntersectRay(query);
+        return result;
+    }
+    public static double GetAnimationProgress(AnimationPlayer animation_player)
+    {
+		return animation_player.CurrentAnimationPosition / animation_player.CurrentAnimationLength;
     }
 
 }

@@ -1,12 +1,15 @@
 using Godot;
 using System;
-public partial class AimWeaponRoot : WeaponRoot
+public partial class AimWeaponRoot : WeaponRoot,IAimObject
 {
 	[Export]
-	public AimResource MyAimResource{get;private set;} = new AimResource(); 
-		public override void _Process(double delta)
+	public AimType MyAimType {get;set;}
+	[Export]
+	public AimResource MyAimResource {get;set;}
+
+	public override void _Process(double delta)
 	{
-		MyAimResource.AimProcess(this,delta);
+		MyAimResource.AimProcess(this,delta,MyAimType);
 		base._Process(delta);
 	}
 }

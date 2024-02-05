@@ -1,7 +1,8 @@
 using Godot;
 using System;
 
-public partial class HealthManager : Node
+[GlobalClass]
+public partial class HealthManager : Node,IUsesCharacter
 {
 	#region exports
 
@@ -16,14 +17,13 @@ public partial class HealthManager : Node
 	[Export]
 	private float IframeLengthSec;
 	[Export]
-	public Godot.Collections.Array<ExtraDamage> MyExtraDamage = new Godot.Collections.Array<ExtraDamage>();
+	private Godot.Collections.Array<ExtraDamage> MyExtraDamage = new Godot.Collections.Array<ExtraDamage>();
 	[Export]
 	private DamageDetector MyDamageDetector;
-
-	//exported nodes
-
 	[Export]
-	Character MyCharacter;
+	public CharacterGetter MyCharacterGetter {get; set;} = new CharacterGetter();
+	public Character MyCharacter{get;set;}
+
 	#endregion
 	#region variables
 	
@@ -35,6 +35,10 @@ public partial class HealthManager : Node
 	#endregion
 
 	#region methods
+	public void AddExtraDamage(ExtraDamage AdditionalExtraDamage)
+	{
+		MyExtraDamage.Add(AdditionalExtraDamage);
+	}
 	public float TakeDamage(DamageRes MyDamageRes){
 		if (CurrentHealthState == (int)HealthStates.Iframe && !MyDamageRes.RespectIframe)
 		{
@@ -63,17 +67,21 @@ public partial class HealthManager : Node
 
 	public void UpdateVitalityStatus()
 	{
-		VitalityStatus(Hp > 0f);
+		if(VitalityStatus is not null){VitalityStatus(Hp > 0f);}
 	}
 	#endregion
 	
 	#region events
 	public Action<bool> VitalityStatus;
 	#endregion
-
+	public bool IsAlive()
+	{
+		return Hp > 0f;
+	}
 	#region processes
 	public override void _Ready()
 		{
+			MyCharacterGetter.GetCharacter(this);
 			if (MaxHp < 0f){
 				MaxHp = Hp;
 			}
@@ -84,15 +92,22 @@ public partial class HealthManager : Node
 	{
 		if (CurrentHealthState == (int)HealthStates.Vulnerable && MyDamageDetector != null)
 		{
-			foreach (DamageDetector Currentdamager in MyDamageDetector.GetDamagers())
+			var MyDamagers = MyDamageDetector.GetDamagers();
+			int DamageThisFrame = 0;
+			foreach (DamageDetector Currentdamager in MyDamagers)
 			{
+				DamageThisFrame += 1;
 				foreach (var BumpType in Currentdamager.DamageBumpTypes)
 				{
+					if(BumpType is null)
+					{
+						GD.PushError("damager BumpType is null");
+					}
 					MyCharacter.ApplyImpulse(BumpType.BumpFunction(delta,Currentdamager.MyCharacter,MyCharacter));
 				}
-				
-				TakeDamage(Currentdamager.MyDamageRes);
+				if(Currentdamager.DealtDamage is not null){Currentdamager.DealtDamage(TakeDamage(Currentdamager.MyDamageRes));}
 			}
+			if(DamageThisFrame > 0){GD.Print(GetParent().Name);GD.Print(DamageThisFrame);}
 		}
 		if (CurrentHealthState == (int)HealthStates.Iframe)
 		{

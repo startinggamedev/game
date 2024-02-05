@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://bd0vv4wj6lrae"]
+
+[ext_resource type="Script" path="res://visuals/particles/ProtectedParticle.cs" id="1_xmdil"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wefkw"]
+
+[node name="ProtectedParticle" type="GPUParticles2D"]
+material = SubResource("CanvasItemMaterial_wefkw")
+scale = Vector2(-1, 1)
+script = ExtResource("1_xmdil")
+metadata/_access_modifiers = {
+"amount": 1,
+"amount_ratio": 1,
+"collision_base_size": 1,
+"draw_order": 1,
+"emitting": 1,
+"explosiveness": 1,
+"fixed_fps": 1,
+"fract_delta": 1,
+"interp_to_end": 1,
+"interpolate": 1,
+"lifetime": 1,
+"local_coords": 1,
+"one_shot": 1,
+"preprocess": 1,
+"process_material": 1,
+"randomness": 1,
+"speed_scale": 1,
+"sub_emitter": 1,
+"texture": 1,
+"trail_enabled": 1,
+"trail_lifetime": 1,
+"trail_section_subdivisions": 1,
+"trail_sections": 1,
+"visibility_rect": 1
+}

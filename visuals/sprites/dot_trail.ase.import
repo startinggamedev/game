@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b38nhihx066tt"
+path="res://.godot/imported/dot_trail.ase-937196d924896ec25d2a4800b4837f4b.res"
+
+[deps]
+
+source_file="res://visuals/sprites/dot_trail.ase"
+dest_files=["res://.godot/imported/dot_trail.ase-937196d924896ec25d2a4800b4837f4b.res"]
+
+[params]
+

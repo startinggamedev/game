@@ -30,7 +30,7 @@ public partial class WeaponState: State
 			if (MyStateThread is AnimationStateThread)
 			{
 			AnimationPlayer MyAnimationPlayer = ((AnimationStateThread)MyStateThread).ThreadAnimationPlayer;
-			AnimationProgress = MyAnimationPlayer.CurrentAnimationPosition / MyAnimationPlayer.CurrentAnimationLength;
+			AnimationProgress = NodeUtilities.GetAnimationProgress(MyAnimationPlayer);
 			}
 			if (AnimationProgress >= CurrentCondition.Start && AnimationProgress <= CurrentCondition.End)
 			{

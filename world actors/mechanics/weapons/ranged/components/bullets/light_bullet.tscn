@@ -1,13 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://7e48plb5fr25"]
+[gd_scene load_steps=6 format=3 uid="uid://7e48plb5fr25"]
 
 [ext_resource type="PackedScene" uid="uid://bc0qxxq5kxtt4" path="res://world actors/mechanics/weapons/ranged/components/bullets/bullet.tscn" id="1_2cect"]
+[ext_resource type="Script" path="res://world actors/characters/components/health/damage_bump_types/VelocityBumpType.cs" id="2_x8os0"]
+[ext_resource type="Script" path="res://commons/state_system/StateMachine.cs" id="4_6e2wb"]
 [ext_resource type="Texture2D" uid="uid://c1ffxhabd66yq" path="res://visuals/sprites/light_bullet.png" id="4_pm7f8"]
 
+[sub_resource type="Resource" id="Resource_f5um0"]
+script = ExtResource("2_x8os0")
+BumpMultiplier = 1.0
+
 [node name="bullet" instance=ExtResource("1_2cect")]
-Weight = 0.3
+Weight = 0.05
+metadata/_access_modifiers = {
+"MyAimResource": 1
+}
 
 [node name="BodyBoundingBox" parent="BodyBoundingBoxDuplicator" index="0"]
 polygon = PackedVector2Array(-4, 0, 0, 4, 4, 0, 0, -4)
+
+[node name="DamageDetector" parent="." index="3"]
+DamageBumpTypes = [SubResource("Resource_f5um0")]
 
 [node name="light_bullet" type="Sprite2D" parent="." index="5"]
 texture = ExtResource("4_pm7f8")
@@ -16,4 +28,5 @@ texture = ExtResource("4_pm7f8")
 polygon = PackedVector2Array(-8, 0, 0, 4, 8, 0, 0, -4)
 
 [node name="BehaviourManager" parent="." index="7" node_paths=PackedStringArray("StartingState")]
+script = ExtResource("4_6e2wb")
 StartingState = NodePath("NormalBehaviour")

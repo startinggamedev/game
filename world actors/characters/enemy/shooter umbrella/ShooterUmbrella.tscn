@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cob38cql5hxyl" path="res://world actors/characters/enemy/enemy.tscn" id="1_pm76d"]
 [ext_resource type="Texture2D" uid="uid://dd7osh2xhgeks" path="res://visuals/sprites/umbrella.png" id="2_0j6vw"]
-[ext_resource type="Script" path="res://world actors/physics/objects/pendulum.gd" id="2_6gjun"]
+[ext_resource type="Script" path="res://world actors/physics/objects/Pendulum.cs" id="2_hsylh"]
 
 [sub_resource type="Animation" id="Animation_ai5ae"]
 length = 0.001
@@ -24,7 +24,7 @@ libraries = {
 }
 
 [node name="Pendulum" type="Node2D" parent="." index="3"]
-script = ExtResource("2_6gjun")
+script = ExtResource("2_hsylh")
 
 [node name="Umbrella" type="Sprite2D" parent="Pendulum" index="0"]
 texture = ExtResource("2_0j6vw")

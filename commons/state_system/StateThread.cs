@@ -18,10 +18,10 @@ public partial class StateThread : Node
 			}
 		if(NextState.MyStateThread != this)
 		{
-			//GD.Print(Name);
-			//GD.Print(NextState.Name);
-			//GD.Print(NextState.MyStateThread);
-			//GD.PushError("current state must be a direct child of this thread");
+			GD.Print(Name);
+			GD.Print(NextState.Name);
+			GD.Print(NextState.MyStateThread);
+			GD.PushError("current state must be a direct child of this thread");
 			return;
 		}
 		CurrentState = NextState;
@@ -43,13 +43,14 @@ public partial class StateThread : Node
 	}
 	public virtual void Process(double delta)
 	{
+		CurrentState.Process(delta);
 		QueueNextState(CurrentState.NextState);
 		if(NextStateQueue is not null)
 		{
 			NextStateQueue();
 			NextStateQueue = null;
 		}
-		CurrentState.Process(delta);
+
 	}
 	public virtual void Physics(double delta)
 	{

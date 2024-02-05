@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b85gef18e22ex"
+path="res://.godot/imported/smal_explosion_center.ase-be1447d6bddb3df56d161c2d0eb79370.res"
+
+[deps]
+
+source_file="res://visuals/sprites/smal_explosion_center.ase"
+dest_files=["res://.godot/imported/smal_explosion_center.ase-be1447d6bddb3df56d161c2d0eb79370.res"]
+
+[params]
+

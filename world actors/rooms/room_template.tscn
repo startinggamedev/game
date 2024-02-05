@@ -8,14 +8,23 @@ shader = ExtResource("2_rqsn5")
 
 [node name="room" type="Node2D" node_paths=PackedStringArray("CharacterViewPort")]
 script = ExtResource("1_34x76")
-CharacterViewPort = NodePath("SubViewportContainer/world_viewport")
+CharacterViewPort = NodePath("WorldViewportContainer/WorldViewPort")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+[node name="BackgroundViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Background" type="SubViewport" parent="BackgroundViewportContainer"]
+handle_input_locally = false
+size = Vector2i(960, 540)
+render_target_update_mode = 4
+
+[node name="WorldViewportContainer" type="SubViewportContainer" parent="."]
 material = SubResource("ShaderMaterial_13t1s")
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="world_viewport" type="SubViewport" parent="SubViewportContainer"]
+[node name="WorldViewPort" type="SubViewport" parent="WorldViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0

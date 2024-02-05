@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 public partial class PhysicsBody : CharacterBody2D{
 	[Export]
@@ -14,7 +15,7 @@ public partial class PhysicsBody : CharacterBody2D{
 	public float FrictionMultiplier = 1f;
 
 //Physics Properties
-	public bool collided = false;
+	public bool Collided = false;
 	public Godot.Vector2 Momentum = Godot.Vector2.Zero;
 	private List<float> FrictionList = new List<float>();
 	private List<Godot.Vector2> TargetVelocities = new List<Godot.Vector2>();
@@ -24,20 +25,20 @@ public partial class PhysicsBody : CharacterBody2D{
 //Node References
 	private FrictionAreaDetector MyFrictionAreaDetector;
 
-	public void SetCollidability(bool CanCollide)
-	{
-		SetCollisionMaskValue(1,CanCollide);
-	}
 
+	#region momentum methods
 	public void ApplyForce(Godot.Vector2 ForceTargetMomentum,float Acceleration)
 	{
 		AccelerationDirection = AccelerationDirection + 
 		(Acceleration * ForceTargetMomentum.Normalized());
 		TargetVelocities.Add(ForceTargetMomentum);
 	}
-
+	public void AttractToPoint(Godot.Vector2 Point,float AttractionAcceleration)
+	{
+		ApplyForce(Point - GlobalPosition,AttractionAcceleration);
+	}
 	public void ApplyImpulse(Godot.Vector2 Impulse){
-		Momentum += Impulse / 60f;
+		Momentum += Impulse;
 	}
 
 	public void AddFriction(float FrictionToAdd){
@@ -47,7 +48,7 @@ public partial class PhysicsBody : CharacterBody2D{
 	public void AddFriction(List<float> FrictionToAdd){
 		FrictionList.AddRange(FrictionToAdd);
 	}
-
+	
 	public void Debugdelta(double delta){
 		GD.Print("Velocity seconds: " + (GlobalPosition.DistanceTo(PrevGlobalPosition) / delta).ToString());
 	}
@@ -79,14 +80,51 @@ public partial class PhysicsBody : CharacterBody2D{
 	{
 		Momentum = MyMath.Mirror(Momentum,Mirror.Normalized()) * BounceScale;
 	}
+
+	#endregion
+	#region collision methods
 	private void Move()
 	{
 		PrevGlobalPosition = GlobalPosition;
 		Velocity = Momentum / Weight;
-		if(MoveAndSlide() && GetSlideCollisionCount() > 0){
+		Collided = MoveAndSlide();
+		if(Collided){
 			Bounce(GetWallNormal(),Bounciness);
 		}
 	}
+	public void SetCollidability(bool CanCollide)
+	{
+		SetCollisionMaskValue(1,CanCollide);
+	}
+	public Godot.Collections.Dictionary RayCollisionCheck(float RayDirection,float RayLength)
+	{
+		return NodeUtilities.CastRay(this,GlobalPosition,GlobalPosition + MyMath.VectorFromAngleAndMagnitude(RayDirection,RayLength),
+		new Godot.Collections.Array<Rid>(){GetRid()},1);
+	}
+	public List<Node2D> GetVisibleNodesByDistance(StringName Group,float SearchRange = float.PositiveInfinity)
+	{
+		var Nodes = NodeUtilities.GetGroupNodesByDistance(GlobalPosition,Group,SearchRange);
+		List<Node2D> NodesToremove = new List<Node2D>(); 
+		foreach (var CurrentNode in Nodes)
+		{
+			var Exceptions = new Godot.Collections.Array<Rid>(){GetRid()};
+			if(CurrentNode is CollisionObject2D)
+			{
+				Exceptions.Add(((CollisionObject2D)(CurrentNode)).GetRid());
+			}
+			if (NodeUtilities.CastRay(this,GlobalPosition,CurrentNode.GlobalPosition,Exceptions,1).Count > 0)
+			{
+				NodesToremove.Add(CurrentNode);
+			}
+		}
+		foreach(Node2D CurrentNode in NodesToremove)
+		{
+			Nodes.Remove(CurrentNode);
+		}
+		return Nodes;
+	}
+	#endregion
+	#region processes
 
 	public override void _Ready()
 	{
@@ -101,4 +139,5 @@ public partial class PhysicsBody : CharacterBody2D{
 		Move();
 		FrictionList.Clear();
 	}
+	#endregion
 }

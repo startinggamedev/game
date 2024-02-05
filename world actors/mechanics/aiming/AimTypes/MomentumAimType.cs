@@ -7,6 +7,10 @@ public partial class MomentumAimType : AimType
     {
         if(MyNode2D is PhysicsBody)
         {
+            if(((PhysicsBody)MyNode2D).Momentum.Length() == 0)
+            {
+                return float.NaN;
+            }
             return ((PhysicsBody)MyNode2D).Momentum.Angle();
         }
         else

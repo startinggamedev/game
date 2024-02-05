@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://vf7fpaduxh1a"]
+
+[ext_resource type="PackedScene" uid="uid://bd0vv4wj6lrae" path="res://visuals/particles/ProtectedParticle.tscn" id="1_egaqm"]
+[ext_resource type="Texture2D" uid="uid://c4cfb8jvxybqt" path="res://visuals/sprites/explosion_debris.png" id="2_0h8qe"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ybjsu"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dpsus"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 306.86
+initial_velocity_max = 306.86
+gravity = Vector3(0, 200, 0)
+anim_offset_max = 1.0
+
+[node name="ExplosionDebris" instance=ExtResource("1_egaqm")]
+material = SubResource("CanvasItemMaterial_ybjsu")
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_dpsus")
+texture = ExtResource("2_0h8qe")
+lifetime = 1.8
+one_shot = true
+explosiveness = 0.89

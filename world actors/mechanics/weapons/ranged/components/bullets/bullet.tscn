@@ -1,8 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://bc0qxxq5kxtt4"]
+[gd_scene load_steps=14 format=3 uid="uid://bc0qxxq5kxtt4"]
 
 [ext_resource type="PackedScene" uid="uid://bi7c5jkpnp3sx" path="res://world actors/characters/Character.tscn" id="1_55lax"]
 [ext_resource type="Script" path="res://world actors/characters/components/health/damage_bump_types/VelocityBumpType.cs" id="2_6e12g"]
+[ext_resource type="Script" path="res://world actors/mechanics/weapons/ranged/components/bullets/Bullet.cs" id="2_vbhf1"]
 [ext_resource type="Script" path="res://world actors/characters/components/health/damage/DamageRes.cs" id="3_mch8h"]
+[ext_resource type="Script" path="res://world actors/mechanics/aiming/AimTypes/MomentumAimType.cs" id="3_tg4fv"]
+[ext_resource type="Script" path="res://world actors/mechanics/aiming/AimResource.cs" id="4_g7naj"]
+[ext_resource type="PackedScene" uid="uid://ba0uo1ht0als6" path="res://visuals/particles/DotTrail.tscn" id="7_dav5d"]
+[ext_resource type="Script" path="res://world actors/characters/components/character getter/CharacterGetter.cs" id="7_vc7r5"]
+
+[sub_resource type="Resource" id="Resource_nlc0w"]
+script = ExtResource("4_g7naj")
+AimSmoothing = 0.0
+AimOffset = 0.0
+CanAim = true
+
+[sub_resource type="Resource" id="Resource_msk80"]
+script = ExtResource("3_tg4fv")
 
 [sub_resource type="Resource" id="Resource_eer80"]
 script = ExtResource("2_6e12g")
@@ -14,10 +28,31 @@ RespectIframe = true
 RespectDefense = true
 Damage = 5.0
 
+[sub_resource type="Resource" id="Resource_0xe3b"]
+script = ExtResource("7_vc7r5")
+
 [node name="bullet" groups=["bullet"] instance=ExtResource("1_55lax")]
 z_index = 100
+script = ExtResource("2_vbhf1")
+MyAimResource = SubResource("Resource_nlc0w")
+MyAimType = SubResource("Resource_msk80")
+Penetration = 0
+Ricochets = 0
+Weight = 0.2
 FrictionMultiplier = 0.0
+metadata/_access_modifiers = {
+"MyAimResource": 1,
+"MyAimType": 1
+}
 
-[node name="DamageDetector" parent="." index="4"]
+[node name="DamageDetector" parent="." index="3"]
 DamageBumpTypes = [SubResource("Resource_eer80")]
 MyDamageRes = SubResource("Resource_ncdpm")
+
+[node name="NormalBehaviour" parent="BehaviourManager" index="0" node_paths=PackedStringArray("DeadState")]
+DeadState = NodePath("../Dead")
+
+[node name="Dead" parent="BehaviourManager" index="1"]
+MyCharacterGetter = SubResource("Resource_0xe3b")
+
+[node name="DotTrail" parent="." index="8" instance=ExtResource("7_dav5d")]

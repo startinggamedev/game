@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://i5b37lnp4pp8"]
+[gd_scene load_steps=10 format=3 uid="uid://i5b37lnp4pp8"]
 
 [ext_resource type="PackedScene" uid="uid://bmjimljr4yt8r" path="res://world actors/mechanics/weapons/ranged/RangedWeapon.tscn" id="1_efvor"]
 [ext_resource type="Texture2D" uid="uid://ds3s0t13ek500" path="res://visuals/sprites/light_cannon.png" id="2_1rumg"]
@@ -75,7 +75,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0.1),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [160.0],
+"args": [10.0],
 "method": &"Attack"
 }]
 }
@@ -88,23 +88,10 @@ _data = {
 "Shoot": SubResource("Animation_xbvtr")
 }
 
-[sub_resource type="GDScript" id="GDScript_6o4ca"]
-script/source = "class_name AimNode
-extends Node2D
-@export var aim_type : AimType
-@export var aim_offset : float = 0.
-@export var flip_y : bool = false
-@export var aim_smoothing : float = 0.
-@export var can_aim : bool = true
-func _process(delta):
-	if aim_type and can_aim: aim_type.aim_function(self,delta)
-	rotation += aim_offset
-	if flip_y: 
-		get_parent().scale.y = sign(cos(get_parent().rotation))
-	#get_parent().global_rotation = Gl.delta_angle_lerp(rotation,get_parent().global_rotation,aim_smoothing,delta*60.)
-"
-
 [node name="LightCannon" instance=ExtResource("1_efvor")]
+metadata/_access_modifiers = {
+"MyAimResource": 0
+}
 
 [node name="WeaponAnimationPlayer" parent="." index="0"]
 libraries = {
@@ -117,10 +104,7 @@ offset = Vector2(10, 0)
 hframes = 3
 vframes = 2
 
-[node name="AimNode" type="Node2D" parent="." index="2"]
-script = SubResource("GDScript_6o4ca")
-
-[node name="WeaponManager" parent="." index="3" node_paths=PackedStringArray("MyBarrels", "MyBarrels")]
+[node name="WeaponManager" parent="." index="2" node_paths=PackedStringArray("MyBarrels", "MyBarrels")]
 _Ammo = 18
 MyBarrels = [NodePath("../Barrel")]
 Projectile = ExtResource("2_562ga")
@@ -129,7 +113,7 @@ MyBarrels = [NodePath("../Barrel")]
 [node name="WeaponThread" parent="WeaponManager/NormalBehaviour" index="0" node_paths=PackedStringArray("MyWeaponManager")]
 MyWeaponManager = NodePath("../..")
 
-[node name="Barrel" type="RayCast2D" parent="." index="4"]
+[node name="Barrel" type="RayCast2D" parent="." index="3"]
 target_position = Vector2(9, 0)
 script = ExtResource("6_5em23")
-Impulse = Vector2(12000, 0)
+Impulse = Vector2(60, 0)

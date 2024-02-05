@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bmqnr0sk7b7qu"
+path="res://.godot/imported/explosion_debris.ase-dbc09c89c3af7778bbfdca50fc058a7c.res"
+
+[deps]
+
+source_file="res://visuals/sprites/explosion_debris.ase"
+dest_files=["res://.godot/imported/explosion_debris.ase-dbc09c89c3af7778bbfdca50fc058a7c.res"]
+
+[params]
+

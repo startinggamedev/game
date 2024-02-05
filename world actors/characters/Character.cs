@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+[GlobalClass]
 public partial class Character : PhysicsBody,IUsesType
 {
 	#region exportedvariables
@@ -11,9 +12,9 @@ public partial class Character : PhysicsBody,IUsesType
 	#region ExportedNodes
 
 	[Export]
-	HealthManager MyHealthManager;
+	public HealthManager MyHealthManager {get; private set;}
 	[Export]
-	DamageDetector MyDamagedetector;
+	public DamageDetector MyDamagedetector{get;private set;}
 	#endregion
 
 	#region Interface implementations

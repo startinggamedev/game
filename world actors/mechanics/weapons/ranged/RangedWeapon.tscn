@@ -59,9 +59,10 @@ End = 1.0
 
 [node name="RangedWeapon" instance=ExtResource("1_aq8t5")]
 script = ExtResource("2_ox5gh")
+MyAimType = null
 MyAimResource = SubResource("Resource_nsrip")
 metadata/_access_modifiers = {
-"MyAimResource": 0
+"MyAimResource": 1
 }
 
 [node name="WeaponManager" parent="." index="1"]

@@ -42,4 +42,8 @@ public class MyMath{
     {
         return Radian % MathF.Tau;
     }
+    public static float RandomizeValue(float Value,float Randomness)
+    {
+        return (float)GD.RandRange(Value - (Value * Randomness),Value);
+    }
 }

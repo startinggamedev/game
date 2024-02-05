@@ -14,5 +14,10 @@ public partial class Gl : Node
         GD.Load<DamageType>("res://world actors/characters/components/health/damage types/AllWeaponType.tres"),
         GD.Load<DamageType>("res://world actors/characters/components/health/damage types/PlayerWeaponType.tres"),
         GD.Load<DamageType>("res://world actors/characters/components/health/damage types/EnemyWeaponType.tres")};
+    private static List<StringName> GroupToFollow = new List<StringName>(){"All","Enemy","Player","All","Enemy","Player"};
+    public static StringName GetGroupTofollow(int Type)
+    {
+        return GroupToFollow[Type];
+    }
     public Node CharacterHolder;
 }

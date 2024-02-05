@@ -1,15 +1,17 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 [GlobalClass]
-public partial class GroupAimType : AimType
+public abstract partial class GroupAimType : AimType
 {
 	[Export]
-	StringName TargetGroup;
+	float SearchRange = float.PositiveInfinity;
+	protected StringName TargetGroup;
 	public override float AimFunction(double delta, Node2D MyNode2D)
 	{
-		Node2D TargetNode = NodeUtilities.GetNearestNodeInGroup(MyNode2D.GlobalPosition,TargetGroup);
-		if(TargetNode is null){return float.NaN;}
-		return MyNode2D.GlobalPosition.AngleToPoint(TargetNode.GlobalPosition);
+		List<Node2D> TargetNodes = NodeUtilities.GetGroupNodesByDistance(MyNode2D.GlobalPosition,TargetGroup,SearchRange);
+		if(TargetNodes.Count <= 0){return float.NaN;}
+		return MyNode2D.GlobalPosition.AngleToPoint(TargetNodes[0].GlobalPosition);
 	}
 }
