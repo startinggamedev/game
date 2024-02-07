@@ -1,61 +1,53 @@
-[gd_scene load_steps=19 format=3 uid="uid://dg8ko0p5wt0lx"]
+[gd_scene load_steps=16 format=3 uid="uid://dg8ko0p5wt0lx"]
 
 [ext_resource type="Script" path="res://world actors/physics/bodies/components/MovementPath/TestMovementPath.cs" id="1_e6mad"]
-[ext_resource type="Script" path="res://world actors/physics/bodies/components/MovementPath/MovementPath.cs" id="2_0q6sl"]
 [ext_resource type="Script" path="res://world actors/physics/bodies/components/MovementPath/PositionPoint.cs" id="2_wxa1q"]
 [ext_resource type="Script" path="res://world actors/physics/bodies/components/MovementPath/LineConnection.cs" id="3_8pvex"]
-[ext_resource type="Script" path="res://world actors/physics/bodies/components/MovementPath/MovementMoment.cs" id="3_b7h0f"]
-[ext_resource type="Script" path="res://world actors/physics/bodies/components/MovementPath/MomentPathPoint.cs" id="3_mkoe5"]
-[ext_resource type="Script" path="res://world actors/physics/bodies/components/MovementPath/MomentPath.cs" id="4_6431u"]
+[ext_resource type="Script" path="res://world actors/physics/bodies/components/MovementPath/Path.cs" id="4_5vg1f"]
+[ext_resource type="Script" path="res://world actors/physics/bodies/components/MovementPath/PathManager.cs" id="5_by66n"]
 [ext_resource type="PackedScene" uid="uid://db3wk1mfk6ou7" path="res://debug/DebugCamera.tscn" id="8_7jk06"]
 
-[sub_resource type="Resource" id="Resource_axeci"]
+[sub_resource type="Resource" id="Resource_5vnmd"]
 script = ExtResource("2_wxa1q")
-Position = Vector2(300, 300)
+Position = Vector2(400, 400)
 
-[sub_resource type="Resource" id="Resource_qoy0x"]
+[sub_resource type="Resource" id="Resource_1y7tt"]
 script = ExtResource("3_8pvex")
-
-[sub_resource type="Resource" id="Resource_lygow"]
-script = ExtResource("3_mkoe5")
 Position = Vector2(0, 0)
-MyConnection = SubResource("Resource_qoy0x")
 
-[sub_resource type="Resource" id="Resource_qy4c3"]
+[sub_resource type="Resource" id="Resource_6hr4h"]
 script = ExtResource("3_8pvex")
+Position = Vector2(100, 50)
 
-[sub_resource type="Resource" id="Resource_4brrc"]
-script = ExtResource("3_mkoe5")
-Position = Vector2(1, 100)
-MyConnection = SubResource("Resource_qy4c3")
+[sub_resource type="Resource" id="Resource_idvth"]
+script = ExtResource("3_8pvex")
+Position = Vector2(100, 0)
 
-[sub_resource type="Resource" id="Resource_l6mpg"]
-script = ExtResource("4_6431u")
-MyPoints = Array[Object]([SubResource("Resource_lygow"), SubResource("Resource_4brrc")])
-EndPosition = Vector2(1, 0)
+[sub_resource type="Resource" id="Resource_rg3l2"]
+script = ExtResource("3_8pvex")
+Position = Vector2(-40, -20)
 
-[sub_resource type="Resource" id="Resource_bwe70"]
+[sub_resource type="Resource" id="Resource_p7ijp"]
+script = ExtResource("3_8pvex")
+Position = Vector2(20, 30)
+
+[sub_resource type="Resource" id="Resource_lk4yc"]
 script = ExtResource("2_wxa1q")
-Position = Vector2(100, 200)
+Position = Vector2(200, 200)
 
-[sub_resource type="Resource" id="Resource_gtcks"]
-script = ExtResource("3_b7h0f")
-StartPathResource = SubResource("Resource_bwe70")
-EndPathResource = SubResource("Resource_axeci")
-MyPath = SubResource("Resource_l6mpg")
+[sub_resource type="Resource" id="Resource_o5ycf"]
+script = ExtResource("4_5vg1f")
+MyConnections = Array[Object]([SubResource("Resource_1y7tt"), SubResource("Resource_6hr4h"), SubResource("Resource_idvth"), SubResource("Resource_rg3l2"), SubResource("Resource_p7ijp")])
+StartPoint = SubResource("Resource_lk4yc")
+EndPoint = SubResource("Resource_5vnmd")
 
-[sub_resource type="Resource" id="Resource_ak8tg"]
-script = ExtResource("3_b7h0f")
-StartPathResource = SubResource("Resource_bwe70")
-EndPathResource = SubResource("Resource_axeci")
-MyPath = SubResource("Resource_l6mpg")
-
-[sub_resource type="Resource" id="Resource_4akgg"]
-script = ExtResource("2_0q6sl")
-MyMoments = [SubResource("Resource_gtcks"), SubResource("Resource_ak8tg")]
+[sub_resource type="Resource" id="Resource_5s44i"]
+script = ExtResource("5_by66n")
+MyPaths = [SubResource("Resource_o5ycf")]
 
 [node name="TestMovementPath" type="Node2D"]
 script = ExtResource("1_e6mad")
-MyPath = SubResource("Resource_4akgg")
+MyPathManager = SubResource("Resource_5s44i")
 
 [node name="DebugCamera" parent="." instance=ExtResource("8_7jk06")]
+position = Vector2(427, 266)

@@ -3,7 +3,7 @@ using System;
 using System.Drawing;
 using System.Text;
 [GlobalClass]
-public partial class LineConnection  : PointConnection
+public partial class LineConnection  : PathConnection
 {
     Godot.Vector2 Line = new Godot.Vector2();
     Godot.Vector2 NormalizedLine = new Godot.Vector2();
@@ -11,24 +11,24 @@ public partial class LineConnection  : PointConnection
     float LineLength = 0f;
     protected override float GetNewLength()
     {
-        Line =End - Start;
+        Line =End - this.Position;
         LineAngle = Line.Angle();
         NormalizedLine = Line.Normalized();
         LineLength = Line.Length();
         return LineLength;
     }
-    public override float GetPointAngle(float Point)
+    public override float GetSegmentAngle(float Point)
     {
         return LineAngle;
     }
 
-    public override float GetNearestPointRelativeTo(Vector2 Position)
+    public override float GetNearestSegmentTo(Vector2 Position)
     {
-        return Math.Clamp(NormalizedLine.Dot(Position - Start),0f,LineLength);
+        return Math.Clamp(NormalizedLine.Dot(Position - this.Position),0f,LineLength);
     }
 
-    public override Vector2 GetPoint(float Position)
+    public override Vector2 GetSegmentPosition(float Position)
     {
-        return Start + (Line / Position);
+        return this.Position + (NormalizedLine* Position);
     }
 }

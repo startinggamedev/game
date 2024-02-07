@@ -1,7 +1,7 @@
 using Godot;
 using System;
 [GlobalClass]
-public partial class PositionPoint : PathPointResource
+public partial class PositionPoint : PathPoint
 {
     [Export]
     Godot.Vector2 Position = new Godot.Vector2();

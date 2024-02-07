@@ -6,7 +6,7 @@ using System.Net;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 
-public partial class PhysicsBody : CharacterBody2D{
+public partial class PhysicsController : Resource{
 	[Export]
 	public float Weight = 1f;
 	[Export]
@@ -49,8 +49,8 @@ public partial class PhysicsBody : CharacterBody2D{
 		FrictionList.AddRange(FrictionToAdd);
 	}
 	
-	public void Debugdelta(double delta){
-		GD.Print("Velocity seconds: " + (GlobalPosition.DistanceTo(PrevGlobalPosition) / delta).ToString());
+	public void Debugdelta(double delta,CharacterBody2D MyBody){
+		GD.Print("Velocity seconds: " + (MyBody.GlobalPosition.DistanceTo(PrevGlobalPosition) / delta).ToString());
 	}
 
 	private void ApplyFriction(List<float> FrictionCollection,double Delta)
@@ -98,7 +98,7 @@ public partial class PhysicsBody : CharacterBody2D{
 	}
 	public Godot.Collections.Dictionary RayCollisionCheck(float RayDirection,float RayLength)
 	{
-		return NodeUtilities.CastRay(this,GlobalPosition,GlobalPosition + MyMath.VectorFromAngleAndMagnitude(RayDirection,RayLength),
+		return NodeUtilities.CastRay(this,GlobalPosition,GlobalPosition + MyMath.FromDirAndMag(RayDirection,RayLength),
 		new Godot.Collections.Array<Rid>(){GetRid()},1);
 	}
 	public List<Node2D> GetVisibleNodesByDistance(StringName Group,float SearchRange = float.PositiveInfinity)
@@ -126,12 +126,7 @@ public partial class PhysicsBody : CharacterBody2D{
 	#endregion
 	#region processes
 
-	public override void _Ready()
-	{
-		MyFrictionAreaDetector = GetNode<FrictionAreaDetector>("FrictionAreaDetector");
-	}
-
-	public override void _PhysicsProcess(double delta)
+	public override void Physics(double delta,CharacterBody2D MyBody)
 	{	
 		CalculateMomentum(delta);
 		AddFriction(MyFrictionAreaDetector.DetectFriction());

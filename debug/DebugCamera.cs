@@ -12,9 +12,18 @@ public partial class DebugCamera : Camera2D
         }
         if(Active)
         {
-            var ZoomToAdd = Input.GetAxis("Scrolldown","ScrollUp");
-            Zoom *= ZoomToAdd * (float)delta;
-            Position += Input.GetVector("Left","Right","Up","Down") * (float)delta * 200f;
+            float ZoomToAdd = 0f;
+            if(Input.IsActionJustReleased("ScrollUp"))
+            {
+                ZoomToAdd = 1.1f;
+            }
+            else if(Input.IsActionJustReleased("ScrollDown"))
+            {
+                ZoomToAdd = 0.9f;
+            }
+            if(ZoomToAdd != 0f){Zoom *= ZoomToAdd;}
+            GD.Print(ZoomToAdd);
+            Position += Input.GetVector("Left","Right","Up","Down") * (float)delta * 2000f;
         }
     }
 }

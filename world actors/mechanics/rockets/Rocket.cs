@@ -36,7 +36,7 @@ public partial class Rocket : Node2D,IAimObject,IUsesCharacter
 		RocketParticles.Amount = (int)(Math.Sqrt(TargetMomentumMagnitude * MomentumScale) * 5f);
 		if (MyTrigger.TimeTriggered > 0f)
 		{
-			MyCharacter.ApplyForce(MyMath.VectorFromAngleAndMagnitude(GlobalRotation,TargetMomentumMagnitude * MomentumScale),
+			MyCharacter.ApplyForce(MyMath.FromDirAndMag(GlobalRotation,TargetMomentumMagnitude * MomentumScale),
 			Acceleration * MomentumScale);
 			MyAnimationPlayer.Play("Moving");
 		}
